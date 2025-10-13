@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:wprt="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>
+           WSD Printing - Printer Object schema
+           Copyright 2005-2006 Microsoft Corp. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+    <xs:include schemaLocation="Job.xsd"/>
+    <xs:annotation>
+        <xs:documentation>Printer Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="PrinterType">
+        <xs:sequence>
+            <xs:element name="PrinterDescription" type="wprt:PrinterDescriptionType"/>
+            <xs:element name="PrinterConfiguration" type="wprt:PrinterConfigurationType"/>
+            <xs:element name="PrinterStatus" type="wprt:PrinterStatusType"/>
+            <xs:element name="DefaultPrintTicket" type="wprt:PrintTicketType" />
+            <xs:element name="PrinterCapabilities" type="wprt:PrinterCapabilitiesType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax" />
+    </xs:complexType>
+    <xs:element name="Printer">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="wprt:PrinterType">
+                    <xs:sequence>
+                        <xs:element name="JobTable" type="wprt:JobTableType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:annotation>
+        <xs:documentation>Printer Description Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="PrinterDescriptionType">
+        <xs:sequence>
+            <xs:element name="ColorSupported" type="wprt:BoolExtType"/>
+            <xs:element name="DeviceId" type="wprt:DeviceIdType"/>
+            <xs:element name="MultipleDocumentJobsSupported" type="wprt:BoolExtType" minOccurs="0"/>
+            <xs:element name="PagesPerMinute" type="wprt:IntOneExtType"/>
+            <xs:element name="PagesPerMinuteColor" type="wprt:IntOneExtType" minOccurs="0"/>
+            <xs:element name="PrinterName" type="wprt:LocalizedStringType" maxOccurs="unbounded"/>
+            <xs:element name="PrinterInfo" type="wprt:LocalizedStringType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="PrinterLocation" type="wprt:LocalizedStringType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax" />
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Printer Description specific semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="DeviceIdType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:DeviceIdBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="DeviceIdBaseType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1023"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="LocalizedStringType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:LocalizedStringRestrictType">
+                <xs:anyAttribute namespace="##other" processContents="lax" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="LocalizedStringRestrictType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="127"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:annotation>
+        <xs:documentation>Printer Configuration Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="PrinterConfigurationType">
+        <xs:sequence>
+            <xs:element name="PrinterEventRate" type="wprt:EventRateType" minOccurs="0"/>
+            <xs:element name="Storage" type="wprt:StorageBaseType" minOccurs="0"/>
+            <xs:element name="Consumables" type="wprt:ConsumablesType" minOccurs="0"/>
+            <xs:element name="InputBins" type="wprt:InputBinsType" minOccurs="0"/>
+            <xs:element name="Finishings" type="wprt:FinishingsType" minOccurs="0"/>
+            <xs:element name="OutputBins" type="wprt:OutputBinsType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax" />
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>Printer Configurations specific semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="StorageBaseType">
+        <xs:sequence>
+            <xs:element name="StorageEntry" type="wprt:StorageEntryType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Name
+Attribute: Removed</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax" />
+    </xs:complexType>
+    <xs:complexType name="ConsumablesType">
+        <xs:sequence>
+            <xs:element name="ConsumableEntry" type="wprt:ConsumableEntryType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Name
+Attribute: Removed</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax" />
+    </xs:complexType>
+    <xs:complexType name="InputBinsType">
+        <xs:sequence>
+            <xs:element name="InputBinEntry" type="wprt:InputBinEntryType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Name
+Attribute: Removed</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax" />
+    </xs:complexType>
+    <xs:complexType name="OutputBinsType">
+        <xs:sequence>
+            <xs:element name="OutputBinEntry" type="wprt:OutputBinEntryType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Name
+Attribute: Removed</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax" />
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Printer Status Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="PrinterStatusType">
+        <xs:sequence>
+            <xs:element name="PrinterCurrentTime" type="wprt:DateTimeExtType"/>
+            <xs:element name="PrinterState" type="wprt:PrinterStateType"/>
+            <xs:element name="PrinterPrimaryStateReason" type="wprt:PrinterStateReasonType" minOccurs="0"/>
+            <xs:element name="PrinterStateReasons" type="wprt:PrinterStateReasonsType" minOccurs="0"/>
+            <xs:element name="QueuedJobCount" type="wprt:IntZeroExtType"/>
+            <xs:element name="ActiveCondition" type="wprt:ActiveConditionTableType" minOccurs="0"/>
+            <xs:element name="ConditionHistory" type="wprt:ConditionHistoryTableType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax" />
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>Printer Status specific semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="PrinterStateType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:PrinterStateBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="PrinterStateBaseType">
+        <xs:union memberTypes="wprt:PrinterStateWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="PrinterStateReasonsType">
+        <xs:sequence>
+            <xs:element name="PrinterStateReason" type="wprt:PrinterStateReasonType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="PrinterStateReasonType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:PrinterStateReasonBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="PrinterStateReasonBaseType">
+        <xs:union memberTypes="wprt:PrinterStateReasonsWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+
+    <xs:complexType name="ActiveConditionTableType">
+        <xs:sequence>
+            <xs:element name="DeviceCondition" type="wprt:DeviceConditionType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Id</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ConditionHistoryTableType">
+        <xs:sequence>
+            <xs:element name="ConditionHistoryEntry" type="wprt:ConditionHistoryEntryType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Id</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="DeviceConditionType">
+        <xs:sequence>
+            <xs:element name="Time" type="wprt:DateTimeExtType"/>
+            <xs:element name="Name" type="wprt:ConditionNameType"/>
+            <xs:element name="Component" type="wprt:ConditionComponentType"/>
+            <xs:element name="Severity" type="wprt:ConditionSeverityType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="Id" type="wprt:ConditionIdType" use="required"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ConditionHistoryEntryType">
+        <xs:complexContent>
+            <xs:extension base="wprt:DeviceConditionType">
+                <xs:sequence>
+                    <xs:element name="ClearTime" type="wprt:DateTimeExtType"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="ConditionIdType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ConditionNameType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:ConditionNameBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ConditionNameBaseType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="CoverOpen"/>
+            <xs:enumeration value="InterlockOpen"/>
+            <xs:enumeration value="Jam"/>
+            <xs:enumeration value="DoorOpen"/>
+            <xs:enumeration value="InputTrayMissing"/>
+            <xs:enumeration value="InputTrayMediaSizeChange"/>
+            <xs:enumeration value="InputTrayMediaTypeChange"/>
+            <xs:enumeration value="InputTraySupplyLow"/>
+            <xs:enumeration value="InputTraySupplyEmpty"/>
+            <xs:enumeration value="OutputTrayMissing"/>
+            <xs:enumeration value="OutputTrayAlmostFull"/>
+            <xs:enumeration value="OutputTrayFull"/>
+            <xs:enumeration value="FuserUnderTemperature"/>
+            <xs:enumeration value="FuserOverTemperature"/>
+            <xs:enumeration value="ConsumableLow"/>
+            <xs:enumeration value="ConsumableEmpty"/>
+            <xs:enumeration value="WasteReceptacleAlmostFull"/>
+            <xs:enumeration value="WasteReceptacleFull"/>
+            <xs:enumeration value="Unknown"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ConditionComponentType">
+        <xs:sequence>
+            <xs:element name="Group" type="wprt:ComponentGroupType"/>
+            <xs:element name="Name" type="wprt:ComponentNameType"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ComponentGroupType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:ComponentGroupBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ComponentGroupBaseType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="PrintService"/>
+            <xs:enumeration value="InputBin"/>
+            <xs:enumeration value="MediaPath"/>
+            <xs:enumeration value="OutputBin"/>
+            <xs:enumeration value="Consumable"/>
+            <xs:enumeration value="CoverDoor"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ComponentNameType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:ComponentNameBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ComponentNameBaseType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ConditionSeverityType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:ConditionSeverityBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ConditionSeverityBaseType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Informational"/>
+            <xs:enumeration value="Warning"/>
+            <xs:enumeration value="Critical"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:annotation>
+        <xs:documentation>Printer Capabilities Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="PrinterCapabilitiesType">
+        <xs:sequence>
+            <xs:element name="JobValues" type="wprt:JobValuesType" minOccurs="0"/>
+            <xs:element name="DocumentValues" type="wprt:DocumentValuesType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="JobValuesType">
+        <xs:sequence>
+            <xs:element name="JobProcessing" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Copies" type="wprt:ValueIntRangeType" minOccurs="0"/>
+                        <xs:element name="JobFinishings" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Staple" minOccurs="0">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="Location" type="wprt:ValueTokenListType"/>
+                                                <xs:element name="Angle" type="wprt:ValueTokenListType"/>
+                                                <xs:any namespace="##other" minOccurs="0"/>
+                                            </xs:sequence>
+                                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="HolePunch" minOccurs="0">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="Edge" type="wprt:ValueTokenListType"/>
+                                                <xs:element name="Pattern" type="wprt:ValueTokenListType"/>
+                                                <xs:any namespace="##other" minOccurs="0"/>
+                                            </xs:sequence>
+                                            <xs:anyAttribute namespace="##other" processContents="lax"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:any namespace="##other" minOccurs="0"/>
+                                </xs:sequence>
+                                <xs:anyAttribute namespace="##other" processContents="lax"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Priority" type="wprt:ValueIntRangeType" minOccurs="0"/>
+                        <xs:any namespace="##other" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:anyAttribute namespace="##other" processContents="lax"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="DocumentProcessing" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="MediaSizeName" type="wprt:ValueTokenListType" minOccurs="0"/>
+                        <xs:element name="MediaType" type="wprt:ValueTokenListType" minOccurs="0"/>
+                        <xs:element name="MediaColor" type="wprt:ValueTokenListType" minOccurs="0"/>
+                        <xs:element name="NumberUp" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="PagesPerSheet" type="wprt:ValueIntListType"/>
+                                    <xs:element name="Direction" type="wprt:ValueTokenListType"/>
+                                    <xs:any namespace="##other" minOccurs="0"/>
+                                </xs:sequence>
+                                <xs:anyAttribute namespace="##other" processContents="lax"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Orientation" type="wprt:ValueTokenListType" minOccurs="0"/>
+                        <xs:element name="Resolution" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="AllowedValue" type="wprt:ResolutionEntryType" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                                <xs:anyAttribute namespace="##other" processContents="lax"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="PrintQuality" type="wprt:ValueTokenListType" minOccurs="0"/>
+                        <xs:element name="Sides" type="wprt:ValueTokenListType" minOccurs="0"/>
+                        <xs:any namespace="##other" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:anyAttribute namespace="##other" processContents="lax"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="DocumentValuesType">
+        <xs:sequence>
+            <xs:element name="DocumentDescription" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Compression" type="wprt:ValueTokenListType" minOccurs="0"/>
+                        <xs:element name="Format" type="wprt:ValueStringListType" minOccurs="0"/>
+                        <xs:any namespace="##other" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:anyAttribute namespace="##other" processContents="lax"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="RequestedPrinterElementsType">
+        <xs:sequence>
+            <xs:element name="Name" type="wprt:QNameExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="PrinterElementDataType">
+        <xs:choice>
+            <xs:element name="PrinterDescription" type="wprt:PrinterDescriptionType"/>
+            <xs:element name="PrinterConfiguration" type="wprt:PrinterConfigurationType"/>
+            <xs:element name="PrinterStatus" type="wprt:PrinterStatusType"/>
+            <xs:element name="DefaultPrintTicket" type="wprt:PrintTicketType"/>
+            <xs:element name="PrinterCapabilities" type="wprt:PrinterCapabilitiesType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+        <xs:attribute name="Name" type="xs:QName" use="required" />
+        <xs:attribute name="Valid" type="xs:boolean" use="required" />
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="PrinterElementsType">
+        <xs:sequence>
+            <xs:element name="ElementData" type="wprt:PrinterElementDataType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Name
+Attribute: Valid</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+</xs:schema>

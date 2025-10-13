@@ -1,0 +1,342 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+             xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+             xmlns:xs="http://www.w3.org/2001/XMLSchema"
+             xmlns:wsdp="http://schemas.xmlsoap.org/ws/2006/02/devprof"
+             xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+             xmlns:wsd="http://schemas.xmlsoap.org/ws/2005/04/discovery"
+             xmlns:wse="http://schemas.xmlsoap.org/ws/2004/08/eventing"
+             xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+             xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+             xmlns:wprt="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+             targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+             name="WSDPrinterService">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Printer Service Web Service Description (WSDL) file
+            Copyright 2005-2006 Microsoft Corporation. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+
+    <wsp:Policy wsu:Id="ServicePolicy">
+        <wsdp:Profile />
+    </wsp:Policy>
+
+    <types>
+        <xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/print">
+            <xs:include schemaLocation="WDPPrint.xsd"/>
+        </xs:schema>
+    </types>
+    <message name="CreatePrintJobRequestMsg">
+        <part name="body" element="wprt:CreatePrintJobRequest"/>
+    </message>
+    <message name="CreatePrintJobResponseMsg">
+        <part name="body" element="wprt:CreatePrintJobResponse"/>
+    </message>
+    <message name="SendDocumentRequestMsg">
+        <part name="body" element="wprt:SendDocumentRequest"/>
+    </message>
+    <message name="SendDocumentResponseMsg">
+        <part name="body" element="wprt:SendDocumentResponse"/>
+    </message>
+    <message name="AddDocumentRequestMsg">
+        <part name="body" element="wprt:AddDocumentRequest"/>
+    </message>
+    <message name="AddDocumentResponseMsg">
+        <part name="body" element="wprt:AddDocumentResponse"/>
+    </message>
+    <message name="CancelJobRequestMsg">
+        <part name="body" element="wprt:CancelJobRequest"/>
+    </message>
+    <message name="CancelJobResponseMsg">
+        <part name="body" element="wprt:CancelJobResponse"/>
+    </message>
+    <message name="GetPrinterElementsRequestMsg">
+        <part name="body" element="wprt:GetPrinterElementsRequest"/>
+    </message>
+    <message name="GetPrinterElementsResponseMsg">
+        <part name="body" element="wprt:GetPrinterElementsResponse"/>
+    </message>
+    <message name="GetJobElementsRequestMsg">
+        <part name="body" element="wprt:GetJobElementsRequest"/>
+    </message>
+    <message name="GetJobElementsResponseMsg">
+        <part name="body" element="wprt:GetJobElementsResponse"/>
+    </message>
+    <message name="GetActiveJobsRequestMsg">
+        <part name="body" element="wprt:GetActiveJobsRequest"/>
+    </message>
+    <message name="GetActiveJobsResponseMsg">
+        <part name="body" element="wprt:GetActiveJobsResponse"/>
+    </message>
+    <message name="GetJobHistoryRequestMsg">
+        <part name="body" element="wprt:GetJobHistoryRequest"/>
+    </message>
+    <message name="GetJobHistoryResponseMsg">
+        <part name="body" element="wprt:GetJobHistoryResponse"/>
+    </message>
+    <message name="SetEventRateRequestMsg">
+        <part name="body" element="wprt:SetEventRateRequest"/>
+    </message>
+    <message name="SetEventRateResponseMsg">
+        <part name="body" element="wprt:SetEventRateResponse"/>
+    </message>
+    <message name="PrinterElementsChangeEventMsg">
+        <part name="body" element="wprt:PrinterElementsChangeEvent"/>
+    </message>
+    <message name="PrinterStatusSummaryEventMsg">
+        <part name="body" element="wprt:PrinterStatusSummaryEvent"/>
+    </message>
+    <message name="PrinterStatusConditionEventMsg">
+        <part name="body" element="wprt:PrinterStatusConditionEvent"/>
+    </message>
+    <message name="PrinterStatusConditionClearedEventMsg">
+        <part name="body" element="wprt:PrinterStatusConditionClearedEvent"/>
+    </message>
+    <message name="JobStatusEventMsg">
+        <part name="body" element="wprt:JobStatusEvent"/>
+    </message>
+    <message name="JobEndStateEventMsg">
+        <part name="body" element="wprt:JobEndStateEvent"/>
+    </message>
+
+    <portType name="PrinterServiceType" wse:EventSource="true" >
+        <operation name="CreatePrintJob">
+            <input message="wprt:CreatePrintJobRequestMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/CreatePrintJob" />
+            <output message="wprt:CreatePrintJobResponseMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/CreatePrintJobResponse" />
+        </operation>
+        <operation name="SendDocument">
+            <input message="wprt:SendDocumentRequestMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/SendDocument" />
+            <output message="wprt:SendDocumentResponseMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/SendDocumentResponse" />
+        </operation>
+        <operation name="AddDocument">
+            <input message="wprt:AddDocumentRequestMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/AddDocument" />
+            <output message="wprt:AddDocumentResponseMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/AddDocumentResponse" />
+        </operation>
+        <operation name="CancelJob">
+            <input message="wprt:CancelJobRequestMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/CancelJob" />
+            <output message="wprt:CancelJobResponseMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/CancelJobResponse" />
+        </operation>
+        <operation name="GetPrinterElements">
+            <input message="wprt:GetPrinterElementsRequestMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetPrinterElements" />
+            <output message="wprt:GetPrinterElementsResponseMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetPrinterElementsResponse" />
+        </operation>
+        <operation name="GetJobElements">
+            <input message="wprt:GetJobElementsRequestMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetJobElements" />
+            <output message="wprt:GetJobElementsResponseMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetJobElementsResponse" />
+        </operation>
+        <operation name="GetActiveJobs">
+            <input message="wprt:GetActiveJobsRequestMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetActiveJobs" />
+            <output message="wprt:GetActiveJobsResponseMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetActiveJobsResponse" />
+        </operation>
+        <operation name="GetJobHistory">
+            <input message="wprt:GetJobHistoryRequestMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetJobHistory" />
+            <output message="wprt:GetJobHistoryResponseMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetJobHistoryResponse" />
+        </operation>
+        <operation name="SetEventRate">
+            <input message="wprt:SetEventRateRequestMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/SetEventRate" />
+            <output message="wprt:SetEventRateResponseMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/SetEventRateResponse" />
+        </operation>
+        <operation name="PrinterElementsChangeEvent">
+            <output message="wprt:PrinterElementsChangeEventMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/PrinterElementsChangeEvent" />
+        </operation>
+        <operation name="PrinterStatusSummaryEvent">
+            <output message="wprt:PrinterStatusSummaryEventMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/PrinterStatusSummaryEvent" />
+        </operation>
+        <operation name="PrinterStatusConditionEvent">
+            <output message="wprt:PrinterStatusConditionEventMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/PrinterStatusConditionEvent" />
+        </operation>
+        <operation name="PrinterStatusConditionClearedEvent">
+            <output message="wprt:PrinterStatusConditionClearedEventMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/PrinterStatusConditionClearedEvent" />
+        </operation>
+        <operation name="JobStatusEvent">
+            <output message="wprt:JobStatusEventMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/JobStatusEvent" />
+        </operation>
+        <operation name="JobEndStateEvent">
+            <output message="wprt:JobEndStateEventMsg"
+                   wsa:Action="http://schemas.microsoft.com/windows/2006/08/wdp/print/JobEndStateEvent" />
+        </operation>
+
+    </portType>
+    <binding name="PrinterServiceBinding" type="wprt:PrinterServiceType">
+        <wsoap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference URI="#ServicePolicy" />
+        <operation name="CreatePrintJob">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/CreatePrintJob"
+                soapActionRequired="true" />
+            <input>
+                <wsoap12:body use="literal" />
+            </input>
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="SendDocument">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/SendDocument"
+                soapActionRequired="true" />
+            <input>
+                <wsoap12:body use="literal" />
+            </input>
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="AddDocument">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/AddDocument"
+                soapActionRequired="true" />
+            <input>
+                <wsoap12:body use="literal" />
+            </input>
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="CancelJob">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/CancelJob"
+                soapActionRequired="true" />
+            <input>
+                <wsoap12:body use="literal" />
+            </input>
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="GetPrinterElements">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetPrinterElements"
+                soapActionRequired="true" />
+            <input>
+                <wsoap12:body use="literal" />
+            </input>
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="GetJobElements">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetJobElements"
+                soapActionRequired="true" />
+            <input>
+                <wsoap12:body use="literal" />
+            </input>
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="GetActiveJobs">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetActiveJobs"
+                soapActionRequired="true" />
+            <input>
+                <wsoap12:body use="literal" />
+            </input>
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="GetJobHistory">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/GetJobHistory"
+                soapActionRequired="true" />
+            <input>
+                <wsoap12:body use="literal" />
+            </input>
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="SetEventRate">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/SetEventRate"
+                soapActionRequired="true" />
+            <input>
+                <wsoap12:body use="literal" />
+            </input>
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="PrinterElementsChangeEvent">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/PrinterElementsChangeEvent"
+                soapActionRequired="true" />
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="PrinterStatusSummaryEvent">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/PrinterStatusSummaryEvent"
+                soapActionRequired="true" />
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="PrinterStatusConditionEvent">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/PrinterStatusConditionEvent"
+                soapActionRequired="true" />
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="PrinterStatusConditionClearedEvent">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/PrinterStatusConditionClearedEvent"
+                soapActionRequired="true" />
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="JobStatusEvent">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/JobStatusEvent"
+                soapActionRequired="true" />
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+        <operation name="JobEndStateEvent">
+            <wsoap12:operation
+                soapAction="http://schemas.microsoft.com/windows/2006/08/wdp/print/JobEndStateEvent"
+                soapActionRequired="true" />
+            <output>
+                <wsoap12:body use="literal" />
+            </output>
+        </operation>
+
+    </binding>
+    <service name="PrinterService">
+        <port name="PrinterPort" binding="wprt:PrinterServiceBinding">
+            <wsoap12:address location="http://localhost/PrinterService/"/>
+        </port>
+    </service>
+</definitions>

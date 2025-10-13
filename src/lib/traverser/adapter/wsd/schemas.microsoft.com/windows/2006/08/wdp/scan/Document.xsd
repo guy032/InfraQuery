@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:wscn="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Scanning - Document Object schema
+            Copyright 2005-2006 Microsoft Corp. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+    <xs:include schemaLocation="Common.xsd"/>
+
+    <xs:complexType name="DocumentsType">
+        <xs:sequence>
+            <xs:element name="DocumentFinalParameters" type="wscn:ActualDocumentParametersType"/>
+            <xs:element name="Document" type="wscn:DocumentType" maxOccurs="unbounded" />
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Document Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="DocumentType">
+        <xs:sequence>
+            <xs:element name="DocumentDescription" type="wscn:DocumentDescriptionType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Document Description Element Definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="DocumentDescriptionType">
+        <xs:sequence>
+            <xs:element name="DocumentName" type="wscn:String255ExtType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Document Parameters Element Definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="DocumentParametersType">
+        <xs:sequence>
+            <xs:element name="Format" type="wscn:DocumentFormatType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CompressionQualityFactor" type="wscn:CompressionQualityFactorType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ImagesToTransfer" type="wscn:ImagesToTransferType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InputSource" type="wscn:DocumentInputSourceType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FilmScanMode" type="wscn:FilmScanModeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ContentType" type="wscn:ContentTypeTicketType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InputSize" type="wscn:DocumentInputSizeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Exposure" type="wscn:ScanExposureType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Scaling" type="wscn:ScalingType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Rotation" type="wscn:RotationType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MediaSides" type="wscn:MediaSidesType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Document Parameters specific semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="DocumentFormatType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:DocumentFormatExtType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="CompressionQualityFactorType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:CompressionQualityFactorExtType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="ImagesToTransferType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:IntZeroExtType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="DocumentInputSourceType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:DocumentInputSourceExtType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="DocumentInputSourceExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:DocumentInputSourceBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="DocumentInputSourceBaseType">
+        <xs:union memberTypes="wscn:DocumentInputSourceWKVType wscn:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+
+    <xs:complexType name="FilmScanModeType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:FilmScanModeExtType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="ContentTypeTicketType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ContentTypeExtType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="DocumentInputSizeType">
+        <xs:choice>
+            <xs:element name="DocumentSizeAutoDetect" type="wscn:BoolExtType"/>
+            <xs:element name="InputMediaSize" type="wscn:DimensionsType" />
+        </xs:choice>
+        <xs:attribute ref="wscn:MustHonor"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ScanExposureType">
+        <xs:choice>
+            <xs:element name="AutoExposure" type="wscn:BoolExtType"/>
+            <xs:element name="ExposureSettings" type="wscn:ExposureSettingsType"/>
+        </xs:choice>
+        <xs:attribute ref="wscn:MustHonor"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ExposureSettingsType">
+        <xs:sequence>
+            <xs:element name="Contrast" type="wscn:Adjustment1000Type" minOccurs="0"/>
+            <xs:element name="Brightness" type="wscn:Adjustment1000Type" minOccurs="0"/>
+            <xs:element name="Sharpness" type="wscn:Adjustment100Type" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ScalingType">
+        <xs:sequence>
+            <xs:element name="ScalingWidth" type="wscn:ScalingRangeType"/>
+            <xs:element name="ScalingHeight" type="wscn:ScalingRangeType"/>
+        </xs:sequence>
+        <xs:attribute ref="wscn:MustHonor"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="RotationType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:RotationExtType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="OffsetExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:IntZeroExtType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="DimensionExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:IntOneExtType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="ResolutionPairExtType">
+        <xs:sequence>
+            <xs:element name="Width" type="wscn:IntOneExtType"/>
+            <xs:element name="Height" type="wscn:IntOneExtType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute ref="wscn:MustHonor"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ScanRegionType">
+        <xs:sequence>
+            <xs:element name="ScanRegionXOffset" type="wscn:OffsetExtType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ScanRegionYOffset" type="wscn:OffsetExtType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ScanRegionWidth" type="wscn:DimensionExtType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ScanRegionHeight" type="wscn:DimensionExtType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ColorJobType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ColorConfigType">
+                <xs:attribute ref="wscn:MustHonor"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="MediaSideType">
+        <xs:sequence>
+            <xs:element name="ScanRegion" type="wscn:ScanRegionType" minOccurs="0"/>
+            <xs:element name="ColorProcessing" type="wscn:ColorJobType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Resolution" type="wscn:ResolutionPairExtType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="MediaSidesType">
+        <xs:sequence>
+            <xs:element name="MediaFront" type="wscn:MediaSideType"/>
+            <xs:element name="MediaBack" type="wscn:MediaSideType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="ActualDocumentParametersType">
+        <xs:sequence>
+            <xs:element name="Format" type="wscn:DocumentFormatOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="CompressionQualityFactor" type="wscn:CompressionQualityFactorOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ImagesToTransfer" type="wscn:ImagesToTransferOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InputSource" type="wscn:DocumentInputSourceOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="FilmScanMode" type="wscn:FilmScanModeOverrideType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ContentType" type="wscn:ContentTypeOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="InputSize" type="wscn:DocumentInputSizeOverrideType"/>
+            <xs:element name="Exposure" type="wscn:ScanExposureOverrideType"/>
+            <xs:element name="Scaling" type="wscn:ScalingOverrideType"/>
+            <xs:element name="Rotation" type="wscn:RotationOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MediaSides" type="wscn:MediaSidesOverrideType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:attribute name="Override" type="xs:boolean" default="false"/>
+    <xs:attribute name="UsedDefault" type="xs:boolean" default="false"/>
+
+    <xs:complexType name="DocumentFormatOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:DocumentFormatExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="CompressionQualityFactorOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:CompressionQualityFactorExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="ImagesToTransferOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:IntZeroExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="DocumentInputSourceOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:DocumentInputSourceExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="FilmScanModeOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:FilmScanModeExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="ContentTypeOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ContentTypeExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="DocumentInputSizeOverrideType">
+        <xs:sequence>
+            <xs:element name="InputMediaSize" type="wscn:DimensionsOverrideType" />
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="DimensionsOverrideType">
+        <xs:sequence>
+            <xs:element name="Width" type="wscn:DimensionOverrideBaseType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Height" type="wscn:DimensionOverrideBaseType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="DimensionOverrideBaseType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:IntOneExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="ScanExposureOverrideType">
+        <xs:sequence>
+            <xs:element name="ExposureSettings" type="wscn:ExposureSettingsOverrideType"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ExposureSettingsOverrideType">
+        <xs:sequence>
+            <xs:element name="Contrast" type="wscn:Adjustment1000OverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Brightness" type="wscn:Adjustment1000OverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Sharpness" type="wscn:Adjustment100OverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="Adjustment1000OverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:Adjustment1000Type">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="Adjustment100OverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:Adjustment100Type">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="ScalingOverrideType">
+        <xs:sequence>
+            <xs:element name="ScalingWidth" type="wscn:ScalingRangeOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ScalingHeight" type="wscn:ScalingRangeOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ScalingRangeOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ScalingRangeType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="RotationOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:RotationExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="MediaSidesOverrideType">
+        <xs:sequence>
+            <xs:element name="MediaFront" type="wscn:MediaSideOverrideType"/>
+            <xs:element name="MediaBack" type="wscn:MediaSideOverrideType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="MediaSideOverrideType">
+        <xs:sequence>
+            <xs:element name="ScanRegion" type="wscn:ScanRegionOverrideType"/>
+            <xs:element name="ColorProcessing" type="wscn:ColorOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Resolution" type="wscn:ResolutionPairOverrideType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="ScanRegionOverrideType">
+        <xs:sequence>
+            <xs:element name="ScanRegionXOffset" type="wscn:OffsetOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ScanRegionYOffset" type="wscn:OffsetOverrideType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ScanRegionWidth" type="wscn:DimensionOverrideBaseType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ScanRegionHeight" type="wscn:DimensionOverrideBaseType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="OffsetOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:IntZeroExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="ColorOverrideType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ColorConfigType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="ResolutionPairOverrideType">
+        <xs:sequence>
+            <xs:element name="Width" type="wscn:ResolutionOverrideBaseType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Height" type="wscn:ResolutionOverrideBaseType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Override
+Attribute: UsedDefault</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ResolutionOverrideBaseType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:IntOneExtType">
+                <xs:attribute ref="wscn:Override"/>
+                <xs:attribute ref="wscn:UsedDefault"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>

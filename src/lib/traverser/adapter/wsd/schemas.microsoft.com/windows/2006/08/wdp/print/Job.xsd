@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:wprt="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Printing - Job Object and related schema
+            Copyright 2005-2006 Microsoft Corp. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+    <xs:include schemaLocation="Common.xsd"/>
+    <xs:include schemaLocation="Document.xsd"/>
+
+    <xs:annotation>
+        <xs:documentation>Job Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="JobTableType">
+        <xs:sequence>
+            <xs:element name="ActiveJobs" type="wprt:ListOfJobsType"/>
+            <xs:element name="JobHistory" type="wprt:ListOfJobsType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="JobType">
+        <xs:sequence>
+            <xs:element name="JobStatus" type="wprt:JobStatusType"/>
+            <xs:element name="PrintTicket" type="wprt:PrintTicketType"/>
+            <xs:element name="Documents" type="wprt:DocumentsType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ListOfJobsType">
+        <xs:sequence>
+            <xs:element name="Job" type="wprt:JobType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="JobSummaryType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wprt:JobIdType"/>
+            <xs:element name="JobState" type="wprt:JobStateType"/>
+            <xs:element name="JobStateReasons" type="wprt:JobStateReasonsType" minOccurs="0"/>
+            <xs:element name="JobName" type="wprt:JobNameType"/>
+            <xs:element name="JobOriginatingUserName" type="wprt:JobOriginatingUserNameType"/>
+            <xs:element name="KOctetsProcessed" type="wprt:IntZeroExtType"/>
+            <xs:element name="MediaSheetsCompleted" type="wprt:IntZeroExtType"/>
+            <xs:element name="NumberOfDocuments" type="wprt:IntZeroExtType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ListOfSummarysType">
+        <xs:sequence>
+            <xs:element name="JobSummary" type="wprt:JobSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Job Status Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="JobStatusType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wprt:JobIdType"/>
+            <xs:element name="JobState" type="wprt:JobStateType"/>
+            <xs:element name="JobStateReasons" type="wprt:JobStateReasonsType" minOccurs="0"/>
+            <xs:element name="KOctetsProcessed" type="wprt:IntZeroExtType"/>
+            <xs:element name="MediaSheetsCompleted" type="wprt:IntZeroExtType"/>
+            <xs:element name="NumberOfDocuments" type="wprt:IntZeroExtType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>Job Status specific semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="JobIdType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:JobIdRestrictionType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="JobIdRestrictionType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="JobStateType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:JobStateExtType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="JobStateExtType">
+        <xs:union memberTypes="wprt:JobStateWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="JobStateReasonsType">
+        <xs:sequence>
+            <xs:element name="JobStateReason" type="wprt:JobStateReasonType" maxOccurs="unbounded">
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="JobStateReasonType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:JobStateReasonExtType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="JobStateReasonExtType">
+        <xs:union memberTypes="wprt:JobStateReasonsWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+
+    <xs:annotation>
+        <xs:documentation>Print Ticket Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="PrintTicketType">
+        <xs:sequence>
+            <xs:element name="JobDescription" type="wprt:JobDescriptionType" minOccurs="0"/>
+            <xs:element name="JobProcessing" type="wprt:JobProcessingType" minOccurs="0"/>
+            <xs:element name="DocumentProcessing" type="wprt:DocumentProcessingType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>Job Description Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="JobDescriptionType">
+        <xs:sequence>
+            <xs:element name="JobName" type="wprt:JobNameType"/>
+            <xs:element name="JobOriginatingUserName" type="wprt:JobOriginatingUserNameType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>Job Description specific semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="JobNameType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:JobNameRestrictionType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="JobNameRestrictionType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="255"/>
+            <xs:whiteSpace value="preserve"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="JobOriginatingUserNameType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:JobOriginatingUserNameRestrictionType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="JobOriginatingUserNameRestrictionType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="255"/>
+            <xs:whiteSpace value="preserve"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:annotation>
+        <xs:documentation>Job Processing Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="JobProcessingType">
+        <xs:sequence>
+            <xs:element name="Copies" type="wprt:JobCopiesType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="JobFinishings" type="wprt:JobFinishingsType" minOccurs="0"/>
+            <xs:element name="Priority" type="wprt:JobPriorityType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>Job Processing specific semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="JobCopiesType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:JobCopiesRestrictionType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="JobCopiesRestrictionType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="JobFinishingsType">
+        <xs:sequence>
+            <xs:element name="Collate" type="wprt:BooleanExtType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="JogOffset" type="wprt:BooleanExtType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Staple" type="wprt:StapleDetailsType" minOccurs="0"/>
+            <xs:element name="HolePunch" type="wprt:HolePunchDetailsType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="BooleanExtType">
+        <xs:simpleContent>
+            <xs:extension base="xs:boolean">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="StapleDetailsType">
+        <xs:sequence>
+            <xs:element name="Location" type="wprt:StapleLocationType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Angle" type="wprt:StapleAngleType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="StapleLocationType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:StapleLocationExtType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="StapleLocationExtType">
+        <xs:union memberTypes="wprt:StapleLocationWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:simpleType name="StapleLocationWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="StapleBottomLeft"/>
+            <xs:enumeration value="StapleBottomRight"/>
+            <xs:enumeration value="StapleTopLeft"/>
+            <xs:enumeration value="StapleTopRight"/>
+            <xs:enumeration value="StapleDualBottom"/>
+            <xs:enumeration value="StapleDualLeft"/>
+            <xs:enumeration value="StapleDualRight"/>
+            <xs:enumeration value="StapleDualTop"/>
+            <xs:enumeration value="SaddleStitch"/>
+            <xs:enumeration value="other"/>
+            <xs:enumeration value="unknown"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="StapleAngleType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:StapleAngleExtType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="StapleAngleExtType">
+        <xs:union memberTypes="wprt:StapleAngleWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:simpleType name="StapleAngleWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="unknown"/>
+            <xs:enumeration value="NotApplicable"/>
+            <xs:enumeration value="Any"/>
+            <xs:enumeration value="Horizontal"/>
+            <xs:enumeration value="Slanted"/>
+            <xs:enumeration value="Vertical"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="HolePunchDetailsType">
+        <xs:sequence>
+            <xs:element name="Edge" type="wprt:HolePunchEdgeType"/>
+            <xs:element name="Pattern" type="wprt:HolePunchPatternType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute ref="wprt:MustHonor"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="HolePunchEdgeType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:HolePunchEdgeExtType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="HolePunchEdgeExtType">
+        <xs:union memberTypes="wprt:HolePunchEdgeWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:simpleType name="HolePunchEdgeWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="Top"/>
+            <xs:enumeration value="Bottom"/>
+            <xs:enumeration value="Left"/>
+            <xs:enumeration value="Right"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="HolePunchPatternType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:HolePunchPatternExtType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="HolePunchPatternExtType">
+        <xs:union memberTypes="wprt:HolePunchPatternWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:simpleType name="HolePunchPatternWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="unknown"/>
+            <xs:enumeration value="NotApplicable"/>
+            <xs:enumeration value="TwoHoleUSTop"/>
+            <xs:enumeration value="ThreeHoleUS"/>
+            <xs:enumeration value="TwoHoleDIN"/>
+            <xs:enumeration value="FourHoleDIN"/>
+            <xs:enumeration value="TwentyTwoHoleUS"/>
+            <xs:enumeration value="NineteenHoleUS"/>
+            <xs:enumeration value="TwoHoleMetric"/>
+            <xs:enumeration value="Swedish4Hole"/>
+            <xs:enumeration value="TwoHoleUSSide"/>
+            <xs:enumeration value="FiveHoleUS"/>
+            <xs:enumeration value="SevenHoleUS"/>
+            <xs:enumeration value="Mixed7H4S"/>
+            <xs:enumeration value="Norweg6Hole"/>
+            <xs:enumeration value="Metric26Hole"/>
+            <xs:enumeration value="Metric30Hole"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="JobPriorityType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:JobPriorityRestrictionType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="JobPriorityRestrictionType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="RequestedJobElementsType">
+        <xs:sequence>
+            <xs:element name="Name" type="wprt:QNameExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType  name="JobElementDataType">
+        <xs:choice>
+            <xs:element name="JobStatus" type="wprt:JobStatusType"/>
+            <xs:element name="PrintTicket" type="wprt:PrintTicketType"/>
+            <xs:element name="Documents" type="wprt:DocumentsType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+        <xs:attribute name="Name" type="xs:QName" use="required" />
+        <xs:attribute name="Valid" type="xs:boolean" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="JobElementsType">
+        <xs:sequence>
+            <xs:element name="ElementData" type="wprt:JobElementDataType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Name
+Attribute: Valid</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:wprt="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	       xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+           elementFormDefault="qualified">
+
+    <xs:include schemaLocation="Common.xsd"/>
+    <xs:include schemaLocation="Document.xsd"/>
+    <xs:include schemaLocation="Job.xsd"/>
+    <xs:include schemaLocation="Printer.xsd"/>
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Printing - Overall Printing schema
+            Copyright 2005-2006 Microsoft Corp. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:annotation>
+        <xs:documentation>
+            All WSD Print Unique Faults
+        </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="PrintServiceFaultValuesType" >
+        <xs:restriction base="xs:QName" >
+            <xs:enumeration value="wprt:InvalidArgs" />
+            <xs:enumeration value="wprt:OperationFailed" />
+            <xs:enumeration value="wprt:ClientErrorCompressionNotSupported" />
+            <xs:enumeration value="wprt:ClientErrorDocumentURLNotFound" />
+            <xs:enumeration value="wprt:ClientErrorDocumentURLSchemeNotSupported" />
+            <xs:enumeration value="wprt:ClientErrorFormatNotSupported" />
+            <xs:enumeration value="wprt:ClientErrorJobIdNotFound" />
+            <xs:enumeration value="wprt:ClientErrorLastDocumentAlreadySent" />
+            <xs:enumeration value="wprt:ClientErrorMultipleDocumentsNotSupported" />
+            <xs:enumeration value="wprt:ServerErrorAddDocumentNotSupported" />
+            <xs:enumeration value="wprt:ServerErrorDocumentActive" />
+            <xs:enumeration value="wprt:ServerErrorInternalError" />
+            <xs:enumeration value="wprt:ServerErrorJobCancelled" />
+            <xs:enumeration value="wprt:ServerErrorNotAcceptingJobs" />
+            <xs:enumeration value="wprt:ServerErrorTemporaryError" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="CreatePrintJobRequestType">
+        <xs:sequence>
+            <xs:element name="PrintTicket" type="wprt:PrintTicketType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CreatePrintJobRequest" type="wprt:CreatePrintJobRequestType"/>
+    <xs:complexType name="CreatePrintJobResponseType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wprt:JobIdType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CreatePrintJobResponse" type="wprt:CreatePrintJobResponseType"/>
+
+    <xs:complexType name="SendDocumentRequestType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wprt:JobIdType"/>
+            <xs:element name="DocumentDescription" type="wprt:DocumentDescriptionType"/>
+            <xs:element name="DocumentProcessing" type="wprt:DocumentProcessingType" minOccurs="0"/>
+            <xs:element name="LastDocument" type="wprt:BoolExtType"/>
+            <xs:element name="DocumentData" type="xs:base64Binary"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SendDocumentRequest" type="wprt:SendDocumentRequestType"/>
+    <xs:complexType name="SendDocumentResponseType">
+        <xs:sequence>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SendDocumentResponse" type="wprt:SendDocumentResponseType"/>
+
+    <xs:complexType name="AddDocumentRequestType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wprt:JobIdType"/>
+            <xs:element name="DocumentDescription" type="wprt:DocumentDescriptionType"/>
+            <xs:element name="DocumentProcessing" type="wprt:DocumentProcessingType" minOccurs="0"/>
+            <xs:element name="LastDocument" type="wprt:BoolExtType"/>
+            <xs:element name="DocumentUrl" type="wprt:AnyURIExtType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AddDocumentRequest" type="wprt:AddDocumentRequestType"/>
+    <xs:complexType name="AddDocumentResponseType">
+        <xs:sequence>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="AddDocumentResponse" type="wprt:AddDocumentResponseType"/>
+
+    <xs:complexType name="CancelJobRequestType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wprt:JobIdType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CancelJobRequest" type="wprt:CancelJobRequestType"/>
+    <xs:complexType name="CancelJobResponseType">
+        <xs:sequence>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CancelJobResponse" type="wprt:CancelJobResponseType"/>
+
+    <xs:complexType name="GetPrinterElementsRequestType">
+        <xs:sequence>
+            <xs:element name="RequestedElements" type="wprt:RequestedPrinterElementsType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetPrinterElementsRequest" type="wprt:GetPrinterElementsRequestType"/>
+    <xs:complexType name="GetPrinterElementsResponseType">
+        <xs:sequence>
+            <xs:element name="PrinterElements" type="wprt:PrinterElementsType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetPrinterElementsResponse" type="wprt:GetPrinterElementsResponseType"/>
+
+    <xs:complexType name="GetJobElementsRequestType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wprt:JobIdType"/>
+            <xs:element name="RequestedElements" type="wprt:RequestedJobElementsType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetJobElementsRequest" type="wprt:GetJobElementsRequestType"/>
+    <xs:complexType name="GetJobElementsResponseType">
+        <xs:sequence>
+            <xs:element name="JobElements" type="wprt:JobElementsType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetJobElementsResponse" type="wprt:GetJobElementsResponseType"/>
+
+    <xs:complexType name="GetActiveJobsRequestType">
+        <xs:sequence>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetActiveJobsRequest" type="wprt:GetActiveJobsRequestType"/>
+    <xs:complexType name="GetActiveJobsResponseType">
+        <xs:sequence>
+            <xs:element name="ActiveJobs" type="wprt:ListOfSummarysType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetActiveJobsResponse" type="wprt:GetActiveJobsResponseType"/>
+
+    <xs:complexType name="GetJobHistoryRequestType">
+        <xs:sequence>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetJobHistoryRequest" type="wprt:GetJobHistoryRequestType"/>
+    <xs:complexType name="GetJobHistoryResponseType">
+        <xs:sequence>
+            <xs:element name="JobHistory" type="wprt:ListOfSummarysType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetJobHistoryResponse" type="wprt:GetJobHistoryResponseType"/>
+
+    <xs:complexType name="SetEventRateRequestType">
+        <xs:sequence>
+            <xs:element name="EventRate" type="wprt:EventRateType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SetEventRateRequest" type="wprt:SetEventRateRequestType"/>
+    <xs:complexType name="SetEventRateResponseType">
+        <xs:sequence>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="SetEventRateResponse" type="wprt:SetEventRateResponseType"/>
+
+    <xs:complexType name="ElementChangesType">
+        <xs:sequence>
+            <xs:element name="PrinterDescription" type="wprt:PrinterDescriptionType" minOccurs="0"/>
+            <xs:element name="PrinterConfiguration" type="wprt:PrinterConfigurationType" minOccurs="0"/>
+            <xs:element name="DefaultPrintTicket" type="wprt:PrintTicketType" minOccurs="0"/>
+            <xs:element name="PrinterCapabilities" type="wprt:PrinterCapabilitiesType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PrinterElementsChangeEventType">
+        <xs:sequence>
+            <xs:element name="ElementChanges" type="wprt:ElementChangesType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="PrinterElementsChangeEvent" type="wprt:PrinterElementsChangeEventType"/>
+
+    <xs:complexType name="StatusSummaryType">
+        <xs:sequence>
+            <xs:element name="PrinterState" type="wprt:PrinterStateType"/>
+            <xs:element name="PrinterPrimaryStateReason" type="wprt:PrinterStateReasonType" minOccurs="0"/>
+            <xs:element name="PrinterStateReasons" type="wprt:PrinterStateReasonsType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PrinterStatusSummaryEventType">
+        <xs:sequence>
+            <xs:element name="StatusSummary" type="wprt:StatusSummaryType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="PrinterStatusSummaryEvent" type="wprt:PrinterStatusSummaryEventType"/>
+
+    <xs:complexType name="PrinterStatusConditionEventType">
+        <xs:sequence>
+            <xs:element name="DeviceCondition" type="wprt:DeviceConditionType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Id</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="PrinterStatusConditionEvent" type="wprt:PrinterStatusConditionEventType"/>
+
+    <xs:complexType name="DeviceConditionClearedType">
+        <xs:sequence>
+            <xs:element name="ConditionId" type="wprt:ConditionIdType"/>
+            <xs:element name="ConditionClearTime" type="wprt:DateTimeExtType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PrinterStatusConditionClearedEventType">
+        <xs:sequence>
+            <xs:element name="DeviceConditionCleared" type="wprt:DeviceConditionClearedType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="PrinterStatusConditionClearedEvent" type="wprt:PrinterStatusConditionClearedEventType"/>
+
+    <xs:complexType name="JobStatusEventType">
+        <xs:sequence>
+            <xs:element name="JobStatus" type="wprt:JobStatusType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="JobStatusEvent" type="wprt:JobStatusEventType"/>
+
+    <xs:complexType name="JobEndStateType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wprt:JobIdType"/>
+            <xs:element name="JobCompletedState" type="wprt:JobStateType"/>
+            <xs:element name="JobCompletedStateReasons" type="wprt:JobStateReasonsType"/>
+            <xs:element name="JobName" type="wprt:JobNameType"/>
+            <xs:element name="JobOriginatingUserName" type="wprt:JobOriginatingUserNameType"/>
+            <xs:element name="KOctetsProcessed" type="wprt:IntZeroExtType"/>
+            <xs:element name="MediaSheetsCompleted" type="wprt:IntZeroExtType"/>
+            <xs:element name="NumberOfDocuments" type="wprt:IntZeroExtType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="JobEndStateEventType">
+        <xs:sequence>
+            <xs:element name="JobEndState" type="wprt:JobEndStateType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="JobEndStateEvent" type="wprt:JobEndStateEventType"/>
+
+</xs:schema>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:wscn="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Printing - Well Known Values schema (excluding Media)
+            Copyright 2005-2006 Microsoft Corp. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+    <xs:annotation>
+        <xs:documentation>Well known values (i.e. keywords) used by semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="DocumentFormatWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="dib"/>
+            <xs:enumeration value="exif"/>
+            <xs:enumeration value="jbig"/>
+            <xs:enumeration value="jfif"/>
+            <xs:enumeration value="jpeg2k"/>
+            <xs:enumeration value="pdf-a"/>
+            <xs:enumeration value="png"/>
+            <xs:enumeration value="tiff-single-uncompressed"/>
+            <xs:enumeration value="tiff-single-g4"/>
+            <xs:enumeration value="tiff-single-g3mh"/>
+            <xs:enumeration value="tiff-single-jpeg-tn2"/>
+            <xs:enumeration value="tiff-multi-uncompressed"/>
+            <xs:enumeration value="tiff-multi-g4"/>
+            <xs:enumeration value="tiff-multi-g3mh"/>
+            <xs:enumeration value="tiff-multi-jpeg-tn2"/>
+            <xs:enumeration value="xps"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DocumentInputSourceWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="ADF"/>
+            <xs:enumeration value="ADFDuplex"/>
+            <xs:enumeration value="Film"/>
+            <xs:enumeration value="Platen"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ContentTypeWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Auto"/>
+            <xs:enumeration value="Text"/>
+            <xs:enumeration value="Photo"/>
+            <xs:enumeration value="Halftone"/>
+            <xs:enumeration value="Mixed"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ColorWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="BlackAndWhite1"/>
+            <xs:enumeration value="Grayscale4"/>
+            <xs:enumeration value="Grayscale8"/>
+            <xs:enumeration value="Grayscale16"/>
+            <xs:enumeration value="RGB24"/>
+            <xs:enumeration value="RGB48"/>
+            <xs:enumeration value="RGBa32"/>
+            <xs:enumeration value="RGBa64"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FilmScanModeWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="NotApplicable"/>
+            <xs:enumeration value="ColorSlideFilm"/>
+            <xs:enumeration value="ColorNegativeFilm"/>
+            <xs:enumeration value="BlackandWhiteNegativeFilm"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RotationWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="0"/>
+            <xs:enumeration value="90"/>
+            <xs:enumeration value="180"/>
+            <xs:enumeration value="270"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="JobStateWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Aborted"/>
+            <xs:enumeration value="Canceled"/>
+            <xs:enumeration value="Completed"/>
+            <xs:enumeration value="Creating"/>
+            <xs:enumeration value="Pending"/>
+            <xs:enumeration value="Pending-Held"/>
+            <xs:enumeration value="Processing"/>
+            <xs:enumeration value="Started"/>
+            <xs:enumeration value="Terminating"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="JobStateReasonWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="InvalidScanTicket"/>
+            <xs:enumeration value="CompressionError"/>
+            <xs:enumeration value="DocumentFormatError"/>
+            <xs:enumeration value="JobCanceledAtDevice"/>
+            <xs:enumeration value="JobCompletedSuccessfully"/>
+            <xs:enumeration value="JobCompletedWithErrors"/>
+            <xs:enumeration value="JobCompletedWithWarnings"/>
+            <xs:enumeration value="JobScanning"/>
+            <xs:enumeration value="JobScanningAndTransfering"/>
+            <xs:enumeration value="JobTimedOut"/>
+            <xs:enumeration value="JobTransfering"/>
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="ScannerStopped"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ScannerStateWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Idle"/>
+            <xs:enumeration value="Processing"/>
+            <xs:enumeration value="Stopped"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ScannerStateReasonWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="AttentionRequired"/>
+            <xs:enumeration value="Calibrating"/>
+            <xs:enumeration value="CoverOpen"/>
+            <xs:enumeration value="InterlockOpen"/>
+            <xs:enumeration value="InternalStorageFull"/>
+            <xs:enumeration value="LampError"/>
+            <xs:enumeration value="LampWarming"/>
+            <xs:enumeration value="MediaJam"/>
+            <xs:enumeration value="MultipleFeedError"/>
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="Paused"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- Keyword extension federated by namespaces -->
+    <xs:simpleType name="KeywordNsExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:pattern value="\w+:[\w_\-\.]+" />
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- Media type Keyword extension federated by MIME type names -->
+    <xs:simpleType name="MimeExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:pattern value="\w+[\w:/;_\-\\\+\.]*" />
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- String extension federated by namespaces -->
+    <xs:simpleType name="StringNsExtensionPatternType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\w+:[\w:/;_\-\\\+\.]*" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

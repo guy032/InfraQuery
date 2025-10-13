@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:wscn="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Commom Element and Types schema
+            Copyright 2005-2006 Microsoft Corporation All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:include schemaLocation="WellKnownValues.xsd"/>
+    <xs:annotation>
+        <xs:documentation>Common attributes and Types used by semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="MustHonor" type="xs:boolean" default="false"/>
+
+    <xs:annotation>
+        <xs:documentation>Common Types for the Scan Template definitions allowed values</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="ValueTokenListType">
+        <xs:sequence>
+            <xs:element name="AllowedValue" type="wscn:NMTOKENSExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ValueIntListType">
+        <xs:sequence>
+            <xs:element name="AllowedValue" type="wscn:IntExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ValueIntRangeType">
+        <xs:sequence>
+            <xs:element name="MinValue" type="wscn:IntExtType" minOccurs="0"/>
+            <xs:element name="MaxValue" type="wscn:IntExtType" />
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Basic element types used in more than one sub-schema</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="BoolExtType">
+        <xs:simpleContent>
+            <xs:extension base="xs:boolean">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="IntExtType">
+        <xs:simpleContent>
+            <xs:extension base="xs:int">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="IntZeroExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:IntZeroBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="IntZeroBaseType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="IntOneExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:IntOneBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="IntOneBaseType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="DateTimeExtType">
+        <xs:simpleContent>
+            <xs:extension base="xs:dateTime">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="String127ExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:String127BaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="String127BaseType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="127"/>
+            <xs:whiteSpace value="preserve"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="String255ExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:String255BaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="String255BaseType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="255"/>
+            <xs:whiteSpace value="preserve"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="NMTOKENSExtType">
+        <xs:simpleContent>
+            <xs:extension base="xs:NMTOKENS">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="AnyURIExtType">
+        <xs:simpleContent>
+            <xs:extension base="xs:anyURI">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="QNameExtType">
+        <xs:simpleContent>
+            <xs:extension base="xs:QName">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Semantic elements used in more than one sub-schema or used directly in an interface</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="DocumentFormatExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:DocumentFormatBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="DocumentFormatBaseType">
+        <xs:union memberTypes="wscn:DocumentFormatWKVType wscn:MimeExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="CompressionQualityFactorExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:CompressionQualityFactorBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="CompressionQualityFactorBaseType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ContentTypeExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ContentTypeBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ContentTypeBaseType">
+        <xs:union memberTypes="wscn:ContentTypeWKVType wscn:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="Adjustment100Type">
+        <xs:simpleContent>
+            <xs:extension base="wscn:Adjustment100BaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="Adjustment100BaseType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="-100"/>
+            <xs:maxInclusive value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="Adjustment1000Type">
+        <xs:simpleContent>
+            <xs:extension base="wscn:Adjustment1000BaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="Adjustment1000BaseType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="-1000"/>
+            <xs:maxInclusive value="1000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ScalingRangeType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ScalingRangeBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ScalingRangeBaseType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="1000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ColorConfigType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ColorConfigBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ColorConfigBaseType">
+        <xs:union memberTypes="wscn:ColorWKVType wscn:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="FilmScanModeExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:FilmScanModeBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="FilmScanModeBaseType">
+        <xs:union memberTypes="wscn:FilmScanModeWKVType wscn:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="RotationExtType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:RotationBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="RotationBaseType">
+        <xs:union memberTypes="wscn:RotationWKVType wscn:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="ResolutionPairType">
+        <xs:sequence>
+            <xs:element name="Width" type="wscn:IntOneExtType"/>
+            <xs:element name="Height" type="wscn:IntOneExtType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ResolutionsType">
+        <xs:sequence>
+            <xs:element name="Widths" type="wscn:ResolutionWidthsType"/>
+            <xs:element name="Heights" type="wscn:ResolutionHeightsType"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ResolutionWidthsType">
+        <xs:sequence>
+            <xs:element name="Width" type="wscn:IntOneExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ResolutionHeightsType">
+        <xs:sequence>
+            <xs:element name="Height" type="wscn:IntOneExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="DimensionsType">
+        <xs:sequence>
+            <xs:element name="Width" type="wscn:IntOneExtType"/>
+            <xs:element name="Height" type="wscn:IntOneExtType"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="FormatSupportedType">
+        <xs:sequence>
+            <xs:element name="FormatValue" type="wscn:DocumentFormatExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="CompressionQualityFactorSupportedType">
+        <xs:sequence>
+            <xs:element name="MinValue" type="wscn:CompressionQualityFactorExtType"/>
+            <xs:element name="MaxValue" type="wscn:CompressionQualityFactorExtType"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="ContentTypesSupportedType">
+        <xs:sequence>
+            <xs:element name="ContentTypeValue" type="wscn:ContentTypeExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="ScalingRangeSupportedType">
+        <xs:sequence>
+            <xs:element name="ScalingWidth">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="MinValue" type="wscn:ScalingRangeType"/>
+                        <xs:element name="MaxValue" type="wscn:ScalingRangeType"/>
+                    </xs:sequence>
+                    <xs:anyAttribute namespace="##other" processContents="lax"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ScalingHeight">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="MinValue" type="wscn:ScalingRangeType"/>
+                        <xs:element name="MaxValue" type="wscn:ScalingRangeType"/>
+                    </xs:sequence>
+                    <xs:anyAttribute namespace="##other" processContents="lax"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="RotationsSupportedType">
+        <xs:sequence>
+            <xs:element name="RotationValue" type="wscn:RotationExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+        </xs:complexType>
+
+    <xs:complexType name="FilmScanModesSupportedType">
+        <xs:sequence>
+            <xs:element name="FilmScanModeValue" type="wscn:FilmScanModeExtType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="DeviceSettingsType">
+        <xs:sequence>
+            <xs:element name="FormatsSupported" type="wscn:FormatSupportedType"/>
+            <xs:element name="CompressionQualityFactorSupported" type="wscn:CompressionQualityFactorSupportedType"/>
+            <xs:element name="ContentTypesSupported" type="wscn:ContentTypesSupportedType"/>
+            <xs:element name="DocumentSizeAutoDetectSupported" type="wscn:BoolExtType"/>
+            <xs:element name="AutoExposureSupported" type="wscn:BoolExtType"/>
+            <xs:element name="BrightnessSupported" type="wscn:BoolExtType"/>
+            <xs:element name="ContrastSupported" type="wscn:BoolExtType"/>
+            <xs:element name="ScalingRangeSupported" type="wscn:ScalingRangeSupportedType"/>
+            <xs:element name="RotationsSupported" type="wscn:RotationsSupportedType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="PlatenType">
+        <xs:sequence>
+            <xs:element name="PlatenOpticalResolution" type="wscn:ResolutionPairType"/>
+            <xs:element name="PlatenResolutions" type="wscn:ResolutionsType"/>
+            <xs:element name="PlatenColor" type="wscn:ColorEntriesType"/>
+            <xs:element name="PlatenMinimumSize" type="wscn:DimensionsType" />
+            <xs:element name="PlatenMaximumSize" type="wscn:DimensionsType" />
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="ColorEntriesType">
+        <xs:sequence>
+            <xs:element name="ColorEntry" type="wscn:ColorConfigType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ADFType">
+        <xs:sequence>
+            <xs:element name="ADFSupportsDuplex" type="wscn:BoolExtType"/>
+            <xs:element name="ADFFront" type="wscn:ADFEntryType" />
+            <xs:element name="ADFBack" type="wscn:ADFEntryType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ADFEntryType">
+        <xs:sequence>
+            <xs:element name="ADFOpticalResolution" type="wscn:ResolutionPairType"/>
+            <xs:element name="ADFResolutions" type="wscn:ResolutionsType"/>
+            <xs:element name="ADFColor" type="wscn:ColorEntriesType"/>
+            <xs:element name="ADFMinimumSize" type="wscn:DimensionsType" />
+            <xs:element name="ADFMaximumSize" type="wscn:DimensionsType" />
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="FilmType">
+        <xs:sequence>
+            <xs:element name="FilmScanModesSupported" type="wscn:FilmScanModesSupportedType"/>
+            <xs:element name="FilmOpticalResolution" type="wscn:ResolutionPairType"/>
+            <xs:element name="FilmResolutions" type="wscn:ResolutionsType"/>
+            <xs:element name="FilmColor" type="wscn:ColorEntriesType"/>
+            <xs:element name="FilmMinimumSize" type="wscn:DimensionsType" />
+            <xs:element name="FilmMaximumSize" type="wscn:DimensionsType" />
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="RegionImageInformationBaseType">
+        <xs:sequence>
+            <xs:element name="PixelsPerLine" type="wscn:IntOneExtType"/>
+            <xs:element name="NumberOfLines" type="wscn:IntOneExtType"/>
+            <xs:element name="BytesPerLine" type="wscn:IntZeroExtType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="ImageInformationType">
+        <xs:sequence>
+            <xs:element name="MediaFrontImageInfo" type="wscn:RegionImageInformationBaseType"/>
+            <xs:element name="MediaBackImageInfo" type="wscn:RegionImageInformationBaseType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:wscn="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	       xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+           elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Scanning - Scanner Object schema
+            Copyright 2005-2006 Microsoft Corp. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+    <xs:include schemaLocation="Common.xsd"/>
+    <xs:include schemaLocation="Document.xsd"/>
+    <xs:include schemaLocation="Job.xsd"/>
+    <xs:include schemaLocation="Scanner.xsd"/>
+
+    <xs:annotation>
+        <xs:documentation>
+            All WSD Scan Unique Faults
+        </xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="ScanServiceFaultValuesType" >
+        <xs:restriction base="xs:QName" >
+            <xs:enumeration value="wscn:InvalidArgs" />
+            <xs:enumeration value="wscn:OperationFailed" />
+            <xs:enumeration value="wscn:ServerErrorTemporaryError" />
+            <xs:enumeration value="wscn:ServerErrorInternalError" />
+            <xs:enumeration value="wscn:ServerErrorNotAcceptingJobs" />
+            <xs:enumeration value="wscn:ClientErrorJobCancelled" />
+            <xs:enumeration value="wscn:ClientErrorJobIdNotFound" />
+            <xs:enumeration value="wscn:ClientErrorFormatNotSupported" />
+            <xs:enumeration value="wscn:ClientErrorInvalidScanIdentifier" />
+            <xs:enumeration value="wscn:ClientErrorInvalidDestinationToken" />
+            <xs:enumeration value="wscn:ClientErrorNoImagesAvailable" />
+            <xs:enumeration value="wscn:ClientErrorInvalidJobToken" />
+            <xs:enumeration value="wscn:ClientErrorConflictingRequiredParameters" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="CreateScanJobRequestType">
+        <xs:sequence>
+            <xs:element name="ScanIdentifier" type="wscn:String255ExtType" minOccurs="0"/>
+            <xs:element name="DestinationToken" type="wscn:String255ExtType" minOccurs="0"/>
+            <xs:element name="ScanTicket" type="wscn:ScanTicketType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CreateScanJobRequest" type="wscn:CreateScanJobRequestType"/>
+    <xs:complexType name="CreateScanJobResponseType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wscn:IntOneExtType"/>
+            <xs:element name="JobToken" type="wscn:String255ExtType"/>
+            <xs:element name="ImageInformation" type="wscn:ImageInformationType" />
+            <xs:element name="DocumentFinalParameters" type="wscn:ActualDocumentParametersType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CreateScanJobResponse" type="wscn:CreateScanJobResponseType"/>
+
+    <xs:complexType name="RetrieveImageRequestType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wscn:IntOneExtType"/>
+            <xs:element name="JobToken" type="wscn:String255ExtType"/>
+            <xs:element name="DocumentDescription" type="wscn:DocumentDescriptionType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="RetrieveImageRequest" type="wscn:RetrieveImageRequestType"/>
+    <xs:complexType name="ScanDataExtType">
+        <xs:simpleContent>
+            <xs:extension base="xs:base64Binary">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="RetrieveImageResponseType">
+        <xs:sequence>
+            <xs:element name="ScanData" type="wscn:ScanDataExtType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="RetrieveImageResponse" type="wscn:RetrieveImageResponseType"/>
+
+    <xs:complexType name="CancelJobRequestType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wscn:IntOneExtType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CancelJobRequest" type="wscn:CancelJobRequestType"/>
+    <xs:complexType name="CancelJobResponseType">
+        <xs:sequence>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CancelJobResponse" type="wscn:CancelJobResponseType"/>
+
+    <xs:complexType name="ValidateScanTicketRequestType">
+        <xs:sequence>
+            <xs:element name="ScanTicket" type="wscn:ScanTicketType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ValidateScanTicketRequest" type="wscn:ValidateScanTicketRequestType"/>
+
+    <xs:complexType name="ValidationInfoType">
+        <xs:sequence>
+            <xs:element name="ValidTicket" type="wscn:BoolExtType"/>
+            <xs:element name="ImageInformation" type="wscn:ImageInformationType" />
+            <xs:element name="ValidScanTicket" type="wscn:ScanTicketType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ValidateScanTicketResponseType">
+        <xs:sequence>
+            <xs:element name="ValidationInfo" type="wscn:ValidationInfoType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ValidateScanTicketResponse" type="wscn:ValidateScanTicketResponseType"/>
+
+    <xs:complexType name="GetScannerElementsRequestType">
+        <xs:sequence>
+            <xs:element name="RequestedElements" type="wscn:RequestedScannerElementsType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetScannerElementsRequest" type="wscn:GetScannerElementsRequestType"/>
+    <xs:complexType name="GetScannerElementsResponseType">
+        <xs:sequence>
+            <xs:element name="ScannerElements" type="wscn:ScannerElementsType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetScannerElementsResponse" type="wscn:GetScannerElementsResponseType"/>
+
+    <xs:complexType name="GetJobElementsRequestType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wscn:IntOneExtType"/>
+            <xs:element name="RequestedElements" type="wscn:RequestedJobElementsType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetJobElementsRequest" type="wscn:GetJobElementsRequestType"/>
+    <xs:complexType name="GetJobElementsResponseType">
+        <xs:sequence>
+            <xs:element name="JobElements" type="wscn:JobElementsType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetJobElementsResponse" type="wscn:GetJobElementsResponseType"/>
+
+    <xs:complexType name="GetActiveJobsRequestType">
+        <xs:sequence>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetActiveJobsRequest" type="wscn:GetActiveJobsRequestType"/>
+    <xs:complexType name="GetActiveJobsResponseType">
+        <xs:sequence>
+            <xs:element name="ActiveJobs" type="wscn:ListOfSummarysType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetActiveJobsResponse" type="wscn:GetActiveJobsResponseType"/>
+
+    <xs:complexType name="GetJobHistoryRequestType">
+        <xs:sequence>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetJobHistoryRequest" type="wscn:GetJobHistoryRequestType"/>
+    <xs:complexType name="GetJobHistoryResponseType">
+        <xs:sequence>
+            <xs:element name="JobHistory" type="wscn:ListOfSummarysType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="GetJobHistoryResponse" type="wscn:GetJobHistoryResponseType"/>
+
+    <xs:complexType name="ScanAvailableEventType">
+        <xs:sequence>
+            <xs:element name="ClientContext" type="wscn:String255ExtType"/>
+            <xs:element name="ScanIdentifier" type="wscn:String255ExtType"/>
+            <xs:element name="InputSource" type="wscn:DocumentInputSourceExtType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ScanAvailableEvent" type="wscn:ScanAvailableEventType"/>
+
+    <xs:complexType name="ElementChangesType">
+        <xs:sequence>
+            <xs:element name="ScannerDescription" type="wscn:ScannerDescriptionType" minOccurs="0"/>
+            <xs:element name="ScannerConfiguration" type="wscn:ScannerConfigurationType" minOccurs="0"/>
+            <xs:element name="DefaultScanTicket" type="wscn:ScanTicketType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ScannerElementsChangeEventType">
+        <xs:sequence>
+            <xs:element name="ElementChanges" type="wscn:ElementChangesType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ScannerElementsChangeEvent" type="wscn:ScannerElementsChangeEventType"/>
+
+    <xs:complexType name="StatusSummaryType">
+        <xs:sequence>
+            <xs:element name="ScannerState" type="wscn:ScannerStateType"/>
+            <xs:element name="ScannerStateReasons" type="wscn:ScannerStateReasonsType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ScannerStatusSummaryEventType">
+        <xs:sequence>
+            <xs:element name="StatusSummary" type="wscn:StatusSummaryType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ScannerStatusSummaryEvent" type="wscn:ScannerStatusSummaryEventType"/>
+
+    <xs:complexType name="ScannerStatusConditionEventType">
+        <xs:sequence>
+            <xs:element name="DeviceCondition" type="wscn:DeviceConditionType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Id</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ScannerStatusConditionEvent" type="wscn:ScannerStatusConditionEventType"/>
+
+    <xs:complexType name="DeviceConditionClearedType">
+        <xs:sequence>
+            <xs:element name="ConditionId" type="wscn:IntOneExtType"/>
+            <xs:element name="ConditionClearTime" type="wscn:DateTimeExtType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ScannerStatusConditionClearedEventType">
+        <xs:sequence>
+            <xs:element name="DeviceConditionCleared" type="wscn:DeviceConditionClearedType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ScannerStatusConditionClearedEvent" type="wscn:ScannerStatusConditionClearedEventType"/>
+
+    <xs:complexType name="JobStatusEventType">
+        <xs:sequence>
+            <xs:element name="JobStatus" type="wscn:JobStatusType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="JobStatusEvent" type="wscn:JobStatusEventType"/>
+
+    <xs:complexType name="JobEndStateType">
+        <xs:sequence>
+            <xs:element name="JobId" type="wscn:IntOneExtType"/>
+            <xs:element name="JobCompletedState" type="wscn:JobStateType"/>
+            <xs:element name="JobCompletedStateReasons" type="wscn:JobStateReasonsType"/>
+            <xs:element name="JobName" type="wscn:String255ExtType"/>
+            <xs:element name="JobOriginatingUserName" type="wscn:String255ExtType"/>
+            <xs:element name="ScansCompleted" type="wscn:IntZeroExtType"/>
+            <xs:element name="JobCompletedTime" type="wscn:DateTimeExtType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="JobEndStateEventType">
+        <xs:sequence>
+            <xs:element name="JobEndState" type="wscn:JobEndStateType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="JobEndStateEvent" type="wscn:JobEndStateEventType"/>
+
+</xs:schema>

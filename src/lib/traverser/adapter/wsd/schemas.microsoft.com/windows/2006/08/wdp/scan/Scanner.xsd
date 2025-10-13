@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:wscn="http://schemas.microsoft.com/windows/2006/08/wdp/scan"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Scanning - Scanner Object schema
+            Copyright 2005-2006 Microsoft Corp. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:include schemaLocation="Job.xsd"/>
+    <xs:annotation>
+        <xs:documentation>NOTE: To use this schema you MUST include ScannerStatus.xs, ScannerDescription.xs,</xs:documentation>
+    </xs:annotation>
+    <xs:annotation>
+        <xs:documentation>Scanner Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="ScannerType">
+        <xs:sequence>
+            <xs:element name="ScannerDescription" type="wscn:ScannerDescriptionType"/>
+            <xs:element name="ScannerConfiguration" type="wscn:ScannerConfigurationType"/>
+            <xs:element name="ScannerStatus" type="wscn:ScannerStatusType"/>
+            <xs:element name="DefaultScanTicket" type="wscn:ScanTicketType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:element name="Scanner">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="wscn:ScannerType">
+                    <xs:sequence>
+                        <xs:element name="JobTable" type="wscn:JobTableType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:annotation>
+        <xs:documentation>Scanner Description elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="ScannerDescriptionType">
+        <xs:sequence>
+            <xs:element name="ScannerName" type="wscn:String127ExtType" maxOccurs="unbounded"/>
+            <xs:element name="ScannerInfo" type="wscn:String127ExtType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="ScannerLocation" type="wscn:String127ExtType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="ScannerConfigurationType">
+        <xs:sequence>
+            <xs:element name="DeviceSettings" type="wscn:DeviceSettingsType" />
+            <xs:element name="Platen" type="wscn:PlatenType" minOccurs="0" />
+            <xs:element name="ADF" type="wscn:ADFType" minOccurs="0" />
+            <xs:element name="Film" type="wscn:FilmType" minOccurs="0" />
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Scanner Status Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="ScannerStatusType">
+        <xs:sequence>
+            <xs:element name="ScannerCurrentTime" type="wscn:DateTimeExtType"/>
+            <xs:element name="ScannerState" type="wscn:ScannerStateType"/>
+            <xs:element name="ScannerStateReasons" type="wscn:ScannerStateReasonsType" minOccurs="0"/>
+            <xs:element name="ActiveConditions" type="wscn:ActiveConditionsTableType" />
+            <xs:element name="ConditionHistory" type="wscn:ConditionHistoryTableType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>Scanner Status specific semantic elements</xs:documentation>
+    </xs:annotation>
+
+    <xs:complexType name="ScannerStateType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ScannerStateBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ScannerStateBaseType">
+        <xs:union memberTypes="wscn:ScannerStateWKVType wscn:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+
+    <xs:complexType name="ScannerStateReasonsType">
+        <xs:sequence>
+            <xs:element name="ScannerStateReason" type="wscn:ScannerStateReasonType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ScannerStateReasonType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ScannerStateReasonBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ScannerStateReasonBaseType">
+        <xs:union memberTypes="wscn:ScannerStateReasonWKVType wscn:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="ActiveConditionsTableType">
+        <xs:sequence>
+            <xs:element name="DeviceCondition" type="wscn:DeviceConditionType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Id</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ConditionHistoryTableType">
+        <xs:sequence>
+            <xs:element name="ConditionHistoryEntry" type="wscn:ConditionHistoryEntryType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Id</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="DeviceConditionType">
+        <xs:sequence>
+            <xs:element name="Time" type="wscn:DateTimeExtType"/>
+            <xs:element name="Name" type="wscn:ConditionNameType"/>
+            <xs:element name="Component" type="wscn:ConditionComponentType"/>
+            <xs:element name="Severity" type="wscn:ConditionSeverityType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="Id" type="wscn:IntOneBaseType" use="required"/>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ConditionHistoryEntryType">
+        <xs:complexContent>
+            <xs:extension base="wscn:DeviceConditionType">
+                <xs:sequence>
+                    <xs:element name="ClearTime" type="wscn:DateTimeExtType"/>
+                </xs:sequence>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ConditionNameType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ConditionNameBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ConditionNameBaseType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Calibrating"/>
+            <xs:enumeration value="CoverOpen"/>
+            <xs:enumeration value="InputTrayEmpty"/>
+            <xs:enumeration value="InterlockOpen"/>
+            <xs:enumeration value="InternalStorageFull"/>
+            <xs:enumeration value="MediaJam"/>
+            <xs:enumeration value="LampError"/>
+            <xs:enumeration value="LampWarning"/>
+            <xs:enumeration value="MultipleFeedError"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ConditionComponentType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ConditionComponentBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ConditionComponentBaseType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="ADF"/>
+            <xs:enumeration value="Film"/>
+            <xs:enumeration value="MediaPath"/>
+            <xs:enumeration value="Platen"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="ConditionSeverityType">
+        <xs:simpleContent>
+            <xs:extension base="wscn:ConditionSeverityBaseType">
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="ConditionSeverityBaseType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Informational"/>
+            <xs:enumeration value="Warning"/>
+            <xs:enumeration value="Critical"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:annotation>
+        <xs:documentation>Client Information definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="RequestedScannerElementsType">
+        <xs:sequence>
+            <xs:element name="Name" type="xs:QName" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType  name="ScannerElementDataType">
+        <xs:choice>
+            <xs:element name="ScannerDescription" type="wscn:ScannerDescriptionType"/>
+            <xs:element name="ScannerConfiguration" type="wscn:ScannerConfigurationType"/>
+            <xs:element name="ScannerStatus" type="wscn:ScannerStatusType"/>
+            <xs:element name="DefaultScanTicket" type="wscn:ScanTicketType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+        <xs:attribute name="Name" type="xs:QName" use="required" />
+        <xs:attribute name="Valid" type="xs:boolean" use="required" />
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="ScannerElementsType">
+        <xs:sequence>
+            <xs:element name="ElementData" type="wscn:ScannerElementDataType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Attribute: Name
+Attribute: Valid</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+
+    <xs:annotation>
+        <xs:documentation>Global definitions for ScanAvaliable subscribe extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="ScanDestinationsType">
+        <xs:sequence>
+            <xs:element name="ScanDestination" type="wscn:ScanDestinationBaseType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="ScanDestinationBaseType">
+        <xs:sequence>
+            <xs:element name="ClientDisplayName" type="wscn:String127ExtType"/>
+            <xs:element name="ClientContext" type="wscn:String255ExtType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:element name="ScanDestinations" type="wscn:ScanDestinationsType"/>
+
+
+    <xs:complexType name="DestinationResponsesType">
+        <xs:sequence>
+            <xs:element name="DestinationResponse" type="wscn:DestinationResponseBaseType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="DestinationResponseBaseType">
+        <xs:sequence>
+            <xs:element name="ClientContext" type="wscn:String255ExtType"/>
+            <xs:element name="DestinationToken" type="wscn:String255ExtType"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="DestinationResponses" type="wscn:DestinationResponsesType"/>
+
+</xs:schema>

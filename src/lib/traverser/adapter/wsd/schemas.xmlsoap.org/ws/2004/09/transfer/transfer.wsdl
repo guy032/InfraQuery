@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <definitions
+     xmlns:tns="http://schemas.dmtf.org/wbem/wsman/1/wsman.xsd"
+     xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+     xmlns:wst="http://schemas.xmlsoap.org/ws/2004/09/transfer"
+     xmlns:wse="http://schemas.xmlsoap.org/ws/2004/08/eventing"
+     xmlns:wsen="http://schemas.xmlsoap.org/ws/2004/09/enumeration"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:xs="http://www.w3.org/2001/XMLSchema"
+     targetNamespace="http://schemas.xmlsoap.org/ws/2004/09/transfer"
+     name="WSMan">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSMan
+        </xs:documentation>
+    </xs:annotation>
+  
+     <types>
+       <xs:schema targetNamespace="http://schemas.xmlsoap.org/ws/2004/09/transfer">
+         <xs:include schemaLocation="wsman.xsd"/>
+         <xs:include schemaLocation="Addressing.xsd" />
+         <xs:include schemaLocation="Transfer.xsd" />
+         <xs:include schemaLocation="eventing.xsd" />
+         <xs:include schemaLocation="enumeration.xsd" />
+       </xs:schema>
+     </types>
+   
+   <!-- Common messages -->
+     <message name="EmptyMessage" />
+     <message name="AnyXmlMessage">
+       <part name="body" type="wst:AnyXmlType" />
+     </message>
+     <message name="OptionalXmlMessage">
+       <part name="body" type="wst:AnyXmlOptionalType" />
+     </message>
+
+  <message name="GetMetadataMsg">
+    <part name="body" element="tns:GetMetadata" />
+  </message>
+  <message name="Metadata" >
+    <part name="body" element="Metadata" />
+  </message>
+  
+   <!-- Specific messages -->
+     <message name="CreateResponseMessage">
+       <part name="body" type="wst:CreateResponseType" />
+     </message>
+  
+   <message name="SubscribeMsg" >
+     <part name="body" element="wse:Subscribe" />
+   </message>
+   <message name="SubscribeResponseMsg" >
+     <part name="body" element="wse:SubscribeResponse" />
+   </message>
+   <message name="UnsubscribeMsg" >
+     <part name="body" element="wse:Unsubscribe" />
+   </message>
+   <message name="UnsubscribeResponseMsg" />
+   
+   <message name="EnumerateMessage">
+     <part name="body" element="wsen:Enumerate" />
+   </message>
+   <message name="EnumerateResponseMessage">
+     <part name="body" element="wsen:EnumerateResponse" />
+   </message>
+   <message name="PullMessage">
+     <part name="body" element="wsen:Pull" />
+   </message>
+   <message name="PullResponseMessage">
+     <part name="body" element="wsen:PullResponse" />
+   </message>
+   <message name="ReleaseMessage">
+     <part name="body" element="wsen:Release" />
+   </message>
+   <message name="ReleaseResponseMessage" />
+   <message name="EnumerationEndMessage" >
+     <part name="body" element="wsen:EnumerationEnd" />
+   </message>
+  
+  
+   <!-- WSMAN portType -->
+     <portType name="WSMAN">
+       <operation name="Get">
+         <input message="tns:OptionalXmlMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/Get" />
+         <output message="tns:Metadata" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/GetResponse" />
+       </operation>
+       <operation name="Put">
+         <input message="tns:AnyXmlMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/Put" />
+         <output message="tns:OptionalXmlMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/PutResponse" />
+       </operation>
+       <operation name="Delete">
+         <input message="tns:EmptyMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/Delete" />
+         <output message="tns:OptionalXmlMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/DeleteResponse" />
+       </operation>
+       <operation name="Create">
+         <input message="tns:AnyXmlMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/Create" />
+         <output message="tns:CreateResponseMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/transfer/CreateResponse" />
+       </operation>
+       <operation name="Subscribe" >
+         <input message="tns:SubscribeMsg" wsa:Action="http://schemas.xmlsoap.org/ws/2004/08/eventing/Subscribe" />
+         <output message="tns:SubscribeResponseMsg" wsa:Action="http://schemas.xmlsoap.org/ws/2004/08/eventing/SubscribeResponse" />
+       </operation>
+       <operation name="Unsubscribe" >
+         <input message="tns:UnsubscribeMsg" wsa:Action="http://schemas.xmlsoap.org/ws/2004/08/eventing/Unsubscribe" />
+         <output message="tns:UnsubscribeResponseMsg" wsa:Action="http://schemas.xmlsoap.org/ws/2004/08/eventing/UnsubscribeResponse" />
+       </operation>
+       <operation name="Enumerate">
+         <input message="tns:EnumerateMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/enumeration/Enumerate" />
+         <output message="tns:EnumerateResponseMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/enumeration/EnumerateResponse" />
+       </operation>
+       <operation name="Pull">
+         <input message="tns:PullMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/enumeration/Pull" />
+         <output message="tns:PullResponseMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/enumeration/PullResponse" />
+       </operation>
+       <operation name="Release">
+         <input message="tns:ReleaseMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/enumeration/Release" />
+         <output message="tns:ReleaseResponseMessage" wsa:Action="http://schemas.xmlsoap.org/ws/2004/09/enumeration/ReleaseResponse" />
+       </operation>
+   </portType>
+  
+  
+   <!-- WSMAN binding -->
+   <binding name="WSMANBinding" type="tns:WSMAN">
+     <soap:binding style="document"
+     transport="http://schemas.xmlsoap.org/soap/http" />
+     <operation name="Get">
+       <soap:operation soapAction="http://example.org/Get"/>
+       <input><soap:body use="literal"/></input>
+       <output><soap:body use="literal"/></output>
+     </operation>
+     <operation name="Put">
+       <soap:operation soapAction="http://example.org/Put"/>
+       <input><soap:body use="literal"/></input>
+       <output><soap:body use="literal"/></output>
+     </operation>
+     <operation name="Delete">
+       <soap:operation soapAction="http://example.org/Delete"/>
+       <input><soap:body use="literal"/></input>
+       <output><soap:body use="literal"/></output>
+     </operation>
+     <operation name="Create">
+       <soap:operation soapAction="http://example.org/Create"/>
+       <input><soap:body use="literal"/></input>
+       <output><soap:body use="literal"/></output>
+     </operation>
+     <operation name="Subscribe">
+       <soap:operation soapAction="http://example.org/Subscribe"/>
+       <input><soap:body use="literal"/></input>
+       <output><soap:body use="literal"/></output>
+     </operation>
+     <operation name="Unsubscribe">
+       <soap:operation soapAction="http://example.org/Unsuscribe"/>
+       <input><soap:body use="literal"/></input>
+       <output><soap:body use="literal"/></output>
+     </operation>
+     <operation name="Enumerate">
+       <soap:operation soapAction="http://example.org/Enumerate"/>
+       <input><soap:body use="literal"/></input>
+       <output><soap:body use="literal"/></output>
+     </operation>
+     <operation name="Pull">
+       <soap:operation soapAction="http://example.org/Pull"/>
+       <input><soap:body use="literal"/></input>
+       <output><soap:body use="literal"/></output>
+     </operation>
+     <operation name="Release">
+       <soap:operation soapAction="http://example.org/Release"/>
+       <input><soap:body use="literal"/></input>
+       <output><soap:body use="literal"/></output>
+     </operation>
+   </binding>
+   
+  <!-- Service Section -->
+  <service name="ResourceService">
+    <port name="ResourcePort" binding="tns:WSMANBinding">
+      <soap:address location="http://example.com/ResourceService"/>
+    </port>
+  </service>
+ </definitions>

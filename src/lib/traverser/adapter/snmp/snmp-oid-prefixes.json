@@ -1,0 +1,270 @@
+{
+  "description": "All OID prefixes to walk during SNMP discovery",
+  "oid_prefixes": [
+    {
+      "oid": "1.3.6.1.2.1.2.2",
+      "description": "Interface Table"
+    },
+    {
+      "oid": "1.3.6.1.2.1.4.22",
+      "description": "ARP Table"
+    },
+    {
+      "oid": "1.3.6.1.4.1.11.2.3.9.4.2",
+      "description": "HP LaserJet"
+    },
+    {
+      "oid": "1.3.6.1.4.1.11.2.3.9.4.2.1",
+      "description": "HP Device Information"
+    },
+    {
+      "oid": "1.3.6.1.4.1.11.2.3.9.4.2.1.1",
+      "description": "HP Device Status"
+    },
+    {
+      "oid": "1.3.6.1.4.1.11.2.3.9.4.2.1.4",
+      "description": "HP Consumables"
+    },
+    {
+      "oid": "1.3.6.1.4.1.236.11.5.1",
+      "description": "Samsung Device"
+    },
+    {
+      "oid": "1.3.6.1.4.1.236.11.5.11.53.11",
+      "description": "Samsung Supplies"
+    },
+    {
+      "oid": "1.3.6.1.4.1.253.8.53.13.2",
+      "description": "Xerox Supplies"
+    },
+    {
+      "oid": "1.3.6.1.4.1.297.1.111.1.41.1.1",
+      "description": "Konica Minolta Device"
+    },
+    {
+      "oid": "1.3.6.1.4.1.367.3.2.1.2",
+      "description": "Ricoh Device"
+    },
+    {
+      "oid": "1.3.6.1.4.1.367.3.2.1.2.19.5",
+      "description": "Ricoh Status"
+    },
+    {
+      "oid": "1.3.6.1.4.1.367.3.2.1.2.24.1",
+      "description": "Ricoh Supplies"
+    },
+    {
+      "oid": "1.3.6.1.4.1.641.2",
+      "description": "Lexmark Device"
+    },
+    {
+      "oid": "1.3.6.1.4.1.641.6.4.2.1",
+      "description": "Lexmark Supplies"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1129.2.3.50.1.3.21.6.1.2",
+      "description": "Toshiba"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1248.1.2.2.1.1",
+      "description": "Epson Status"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1248.1.2.2.27",
+      "description": "Epson Info"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1248.1.2.2.28.1",
+      "description": "Epson Supplies"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1248.1.2.2.6.1",
+      "description": "Epson Device"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1347.40.10",
+      "description": "Kyocera Device"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1347.42.2.1.1",
+      "description": "Kyocera Status"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1347.42.2.2",
+      "description": "Kyocera Info"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1347.42.3",
+      "description": "Kyocera Network"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1347.43.10.1",
+      "description": "Kyocera Supplies"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1347.46.10",
+      "description": "Kyocera Counter"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1602.1.2.1.4",
+      "description": "Canon Device"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1602.1.11.1.3",
+      "description": "Canon Status"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1602.1.11.1.4",
+      "description": "Canon Info"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1602.1.11.2.1",
+      "description": "Canon Supplies 1"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1602.1.11.2.2",
+      "description": "Canon Supplies 2"
+    },
+    {
+      "oid": "1.3.6.1.4.1.2001.1.1.1.1.11.1.10",
+      "description": "OKI Supplies"
+    },
+    {
+      "oid": "1.3.6.1.4.1.2385.1.1.19.2",
+      "description": "Sharp Supplies"
+    },
+    {
+      "oid": "1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.52.2",
+      "description": "Brother Status"
+    },
+    {
+      "oid": "1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.52.21",
+      "description": "Brother Supplies"
+    },
+    {
+      "oid": "1.3.6.1.4.1.2435.2.3.9.4.2.1.5.5.54.2.2",
+      "description": "Brother Device"
+    },
+    {
+      "oid": "1.3.6.1.4.1.18334.1.1.1.5.7.2.2",
+      "description": "Konica Minolta Status"
+    },
+    {
+      "oid": "1.3.6.1.4.1.18334.1.1.1.5.7.2.3",
+      "description": "Konica Minolta Info"
+    },
+    {
+      "oid": "1.3.6.1.4.1.40093.6",
+      "description": "Pantum Device"
+    },
+    {
+      "oid": "1.3.6.1.2.1.1",
+      "description": "System"
+    },
+    {
+      "oid": "1.3.6.1.2.1.2",
+      "description": "Interfaces"
+    },
+    {
+      "oid": "1.3.6.1.2.1.4.6",
+      "description": "ipForwDatagrams - router, switch, access point"
+    },
+    {
+      "oid": "1.3.6.1.2.1.10.7",
+      "description": "Ethernet-like network interfaces"
+    },
+    {
+      "oid": "1.3.6.1.2.1.10.127",
+      "description": "Frequency (RF)"
+    },
+    {
+      "oid": "1.3.6.1.2.1.17",
+      "description": "Bridge"
+    },
+    {
+      "oid": "1.3.6.1.2.1.25.1",
+      "description": "Host Resources"
+    },
+    {
+      "oid": "1.3.6.1.2.1.25.3.2.1.3",
+      "description": "hrDeviceType table"
+    },
+    {
+      "oid": "1.3.6.1.2.1.33",
+      "description": "Uninterruptible Power Supplies"
+    },
+    {
+      "oid": "1.3.6.1.2.1.38",
+      "description": "Modem"
+    },
+    {
+      "oid": "1.3.6.1.2.1.43.5.1.1",
+      "description": "Printer"
+    },
+    {
+      "oid": "1.3.6.1.2.1.43.8.2",
+      "description": "Printer"
+    },
+    {
+      "oid": "1.3.6.1.2.1.43.10.2.1",
+      "description": "Printer"
+    },
+    {
+      "oid": "1.3.6.1.2.1.43.11.1.1",
+      "description": "Printer"
+    },
+    {
+      "oid": "1.3.6.1.2.1.43.12.1.1",
+      "description": "Printer"
+    },
+    {
+      "oid": "1.3.6.1.2.1.43.18.1.1",
+      "description": "Printer"
+    },
+    {
+      "oid": "1.3.6.1.2.1.9999",
+      "description": "Modem - DOCSIS Baseline Privacy Plus Interface (BPI+)"
+    },
+    {
+      "oid": "1.3.6.1.4.1.9.9.272",
+      "description": "Cisco"
+    },
+    {
+      "oid": "1.3.6.1.4.1.318.1.1.1.1",
+      "description": "APC"
+    },
+    {
+      "oid": "1.3.6.1.4.1.1129.2.3.50.1.3.21.6",
+      "description": "Tec"
+    },
+    {
+      "oid": "1.3.6.1.4.1.14823.2.2.1.5.2.1.4",
+      "description": "Aruba"
+    },
+    {
+      "oid": "1.3.6.1.4.1.14988.1.1.1",
+      "description": "MikroTik"
+    },
+    {
+      "oid": "1.3.6.1.4.1.14988.1.1.1.3",
+      "description": "MikroTik"
+    },
+    {
+      "oid": "1.3.6.1.4.1.41112.1.6",
+      "description": "Ubiquiti"
+    },
+    {
+      "oid": "1.3.6.1.4.1.41112.1.3",
+      "description": "Ubiquiti"
+    },
+    {
+      "oid": "1.0.8802.1.1.2.1",
+      "description": "IEEE 802.11 MIB (LLDP)"
+    },
+    {
+      "oid": "1.2.840.10036",
+      "description": "IEEE802dot11"
+    }
+  ]
+}
+

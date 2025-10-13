@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:wprt="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Printing - Document Object and related schema
+            Copyright 2005-2006 Microsoft Corp. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+    <xs:include schemaLocation="Common.xsd"/>
+
+    <xs:annotation>
+        <xs:documentation>Document Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="DocumentType">
+        <xs:sequence>
+            <xs:element name="DocumentDescription" type="wprt:DocumentDescriptionType"/>
+            <xs:element name="DocumentProcessing"  type="wprt:DocumentProcessingType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="DocumentsType">
+        <xs:sequence>
+            <xs:element name="Document" type="wprt:DocumentType" maxOccurs="unbounded" />
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Document Description Element Definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="DocumentDescriptionType">
+        <xs:sequence>
+            <xs:element name="DocumentId" type="wprt:DocumentIdType"/>
+            <xs:element name="Compression" type="wprt:CompressionType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Format" type="wprt:DocumentFormatType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DocumentName" type="wprt:String255ExtType" minOccurs="0"/>
+            <xs:element name="DocumentUrl" type="wprt:AnyURIExtType" minOccurs="0"/>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>Document Processing Element definition</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="DocumentProcessingType">
+        <xs:sequence>
+            <xs:element name="MediaSizeName" type="wprt:MediaSizeNameType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MediaType" type="wprt:MediaTypeBaseType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="MediaColor" type="wprt:MediaColorType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="NumberUp" type="wprt:NumberUpType" minOccurs="0"/>
+            <xs:element name="Orientation" type="wprt:OrientationType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Resolution" type="wprt:ResolutionType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="PrintQuality" type="wprt:PrintQualityType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Sides" type="wprt:SidesType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+
+    <xs:annotation>
+        <xs:documentation>Document Processing specific semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="NumberUpType">
+        <xs:sequence>
+            <xs:element name="PagesPerSheet" type="wprt:NUpPagesPerSheetType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Direction" type="wprt:NUpDirectionType">
+                <xs:annotation>
+                    <xs:documentation>Attribute: MustHonor</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="NUpPagesPerSheetType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:NUpPagesPerSheetRestrictionType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="NUpPagesPerSheetRestrictionType">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="NUpDirectionType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:NUpDirectionRestrictionType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="NUpDirectionRestrictionType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="RightDown"/>
+            <xs:enumeration value="DownRight"/>
+            <xs:enumeration value="LeftDown"/>
+            <xs:enumeration value="DownLeft"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="OrientationType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:OrientationBaseType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="OrientationBaseType">
+        <xs:union memberTypes="wprt:OrientationWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="PrintQualityType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:PrintQualityBaseType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="PrintQualityBaseType">
+        <xs:union memberTypes="wprt:PrintQualityWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+    <xs:complexType name="ResolutionType">
+        <xs:complexContent>
+            <xs:extension base="wprt:ResolutionEntryType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SidesType">
+        <xs:simpleContent>
+            <xs:extension base="wprt:SidesBaseType">
+                <xs:attribute ref="wprt:MustHonor"/>
+                <xs:anyAttribute namespace="##other" processContents="lax"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="SidesBaseType">
+        <xs:union memberTypes="wprt:SidesWKVType wprt:KeywordNsExtensionPatternType"/>
+    </xs:simpleType>
+
+</xs:schema>

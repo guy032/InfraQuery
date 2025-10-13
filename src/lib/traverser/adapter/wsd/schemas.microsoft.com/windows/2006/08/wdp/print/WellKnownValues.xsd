@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:wprt="http://schemas.microsoft.com/windows/2006/08/wdp/print"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:annotation>
+        <xs:documentation>
+            WSD Printing - Well Known Values schema (excluding Media)
+            Copyright 2005-2006 Microsoft Corp. All rights reserved
+        </xs:documentation>
+    </xs:annotation>
+    <xs:annotation>
+        <xs:documentation>Well known values (i.e. keywords) used by semantic elements</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="CompressionWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="Gzip"/>
+            <xs:enumeration value="Compress"/>
+            <xs:enumeration value="Deflate"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DocumentFormatWKVType">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="application/octet-stream"/>
+            <xs:enumeration value="application/postscript"/>
+            <xs:enumeration value="application/vnd.hp-PCL"/>
+            <xs:enumeration value="application/vnd.ms-xpsdocument"/>
+            <xs:enumeration value="application/vnd.pwg-xhtml-print+xml"/>
+            <xs:enumeration value="image/g3fax"/>
+            <xs:enumeration value="image/gif"/>
+            <xs:enumeration value="image/jpeg"/>
+            <xs:enumeration value="image/png"/>
+            <xs:enumeration value="image/tiff"/>
+            <xs:enumeration value="image/tiff-fx"/>
+            <xs:enumeration value="text/html"/>
+            <xs:enumeration value="text/plain"/>
+            <xs:enumeration value="text/plain;charset=utf-8"/>
+            <xs:enumeration value="unknown"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="InputBinWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Bottom"/>
+            <xs:enumeration value="Bypass"/>
+            <xs:enumeration value="Envelope"/>
+            <xs:enumeration value="EnvelopeManual"/>
+            <xs:enumeration value="LargeCapacity"/>
+            <xs:enumeration value="Manual"/>
+            <xs:enumeration value="Middle"/>
+            <xs:enumeration value="Multipurpose"/>
+            <xs:enumeration value="Top"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="JobStateWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Aborted"/>
+            <xs:enumeration value="Canceled"/>
+            <xs:enumeration value="Completed"/>
+            <xs:enumeration value="Pending"/>
+            <xs:enumeration value="Pending-Held"/>
+            <xs:enumeration value="Processing"/>
+            <xs:enumeration value="ProcessingStopped"/>
+            <xs:enumeration value="Started"/>
+            <xs:enumeration value="Terminating"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="JobStateReasonsWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="CompressionError"/>
+            <xs:enumeration value="DocumentAccessError"/>
+            <xs:enumeration value="DocumentFormatError"/>
+            <xs:enumeration value="DocumentTimeoutError"/>
+            <xs:enumeration value="DocumentTransferError"/>
+            <xs:enumeration value="JobCanceledAtDevice"/>
+            <xs:enumeration value="JobCanceledByUser"/>
+            <xs:enumeration value="JobCompletedSuccessfully"/>
+            <xs:enumeration value="JobCompletedWithErrors"/>
+            <xs:enumeration value="JobCompletedWithWarnings"/>
+            <xs:enumeration value="JobIncoming"/>
+            <xs:enumeration value="JobPasswordWait"/>
+            <xs:enumeration value="JobPrinting"/>
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="PrinterStopped"/>
+            <xs:enumeration value="UnsupportedCompression"/>
+            <xs:enumeration value="UnsupportedDocumentFormat"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OrientationWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Landscape"/>
+            <xs:enumeration value="Portrait"/>
+            <xs:enumeration value="ReverseLandscape"/>
+            <xs:enumeration value="ReversePortrait"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OutputBinWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Bottom"/>
+            <xs:enumeration value="Center"/>
+            <xs:enumeration value="Face-down"/>
+            <xs:enumeration value="Face-up"/>
+            <xs:enumeration value="Finisher"/>
+            <xs:enumeration value="Large-capacity"/>
+            <xs:enumeration value="Left"/>
+            <xs:enumeration value="Middle"/>
+            <xs:enumeration value="My-mailbox"/>
+            <xs:enumeration value="Rear"/>
+            <xs:enumeration value="Right"/>
+            <xs:enumeration value="Side"/>
+            <xs:enumeration value="Top"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PrintQualityWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Draft"/>
+            <xs:enumeration value="High"/>
+            <xs:enumeration value="Normal"/>
+            <xs:enumeration value="Photo"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PrinterStateWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Idle"/>
+            <xs:enumeration value="Processing"/>
+            <xs:enumeration value="Stopped"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="PrinterStateReasonsWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="AttentionRequired"/>
+            <xs:enumeration value="DoorOpen"/>
+            <xs:enumeration value="MarkerSupplyEmpty"/>
+            <xs:enumeration value="MarkerSupplyLow"/>
+            <xs:enumeration value="MediaEmpty"/>
+            <xs:enumeration value="MediaJam"/>
+            <xs:enumeration value="MediaLow"/>
+            <xs:enumeration value="MediaNeeded"/>
+            <xs:enumeration value="None"/>
+            <xs:enumeration value="Paused"/>
+            <xs:enumeration value="OutputAreaAlmostFull"/>
+            <xs:enumeration value="OutputAreaFull"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SidesWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="OneSided"/>
+            <xs:enumeration value="TwoSidedLongEdge"/>
+            <xs:enumeration value="TwoSidedShortEdge"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:annotation>
+        <xs:documentation>Well Known Values for the Media Element schema</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="MediaWKVType">
+        <xs:union memberTypes="wprt:MediaSizeSelfDescribingNameWKVType"/>
+    </xs:simpleType>
+    <xs:simpleType name="MediaSizeNameWKVType">
+        <xs:union memberTypes="wprt:MediaSizeSelfDescribingNameWKVType"/>
+    </xs:simpleType>
+    <xs:simpleType name="MediaSizeSelfDescribingNameWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="iso_a4_210x297mm"/>
+            <xs:enumeration value="iso_c5_162x229mm"/>
+            <xs:enumeration value="iso_dl_110x220mm"/>
+            <xs:enumeration value="jis_b4_257x364mm"/>
+            <xs:enumeration value="na_legal_8.5x14in"/>
+            <xs:enumeration value="na_letter_8.5x11in"/>
+            <xs:enumeration value="pwg_letter-or-a4_choice"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MediaTypeWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="cardstock"/>
+            <xs:enumeration value="envelope"/>
+            <xs:enumeration value="labels"/>
+            <xs:enumeration value="photographic"/>
+            <xs:enumeration value="photographic-glossy"/>
+            <xs:enumeration value="photographic-matte"/>
+            <xs:enumeration value="stationery"/>
+            <xs:enumeration value="stationery-inkjet"/>
+            <xs:enumeration value="transparency"/>
+            <xs:enumeration value="other"/>
+            <xs:enumeration value="unknown"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MediaColorWKVType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="unknown"/>
+            <xs:enumeration value="white"/>
+            <xs:enumeration value="pink"/>
+            <xs:enumeration value="yellow"/>
+            <xs:enumeration value="buff"/>
+            <xs:enumeration value="goldenrod"/>
+            <xs:enumeration value="blue"/>
+            <xs:enumeration value="green"/>
+            <xs:enumeration value="red"/>
+            <xs:enumeration value="gray"/>
+            <xs:enumeration value="ivory"/>
+            <xs:enumeration value="orange"/>
+            <xs:enumeration value="other"/>
+            <xs:enumeration value="no-color"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:annotation>
+        <xs:documentation>Patterns for media keyword extension</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="MediaSizeNameExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:pattern value="custom_max_(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))x(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))in"/>
+            <xs:pattern value="custom_max_(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))x(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))mm"/>
+            <xs:pattern value="custom_min_(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))x(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))in"/>
+            <xs:pattern value="custom_min_(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))x(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))mm"/>
+            <xs:pattern value="(custom|na|asme|oe)_[a-z0-9][a-z0-9\-]*_(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))x(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))in"/>
+            <xs:pattern value="(custom|iso|jis|jpn|prc|om)_[a-z0-9][a-z0-9\-]*_(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))x(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))mm"/>
+            <xs:pattern value="[a-z0-9][a-z0-9\.]*_[a-z0-9][a-z0-9\-]*_(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))x(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))in"/>
+            <xs:pattern value="[a-z0-9][a-z0-9\.]*_[a-z0-9][a-z0-9\-]*_(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))x(([1-9][0-9]*(\.[0-9]*[1-9])?)|(0\.[0-9]*[1-9]))mm"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MediaTypeExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:pattern value="custom-media-type-[a-z][a-z0-9\-]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MediaColorExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:pattern value="custom-media-color-[a-z][a-z0-9\-]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MediaNsExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:pattern value="(\i|\d|\.)*&#x003A;(\i|\d|\.)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Input Bin Keyword extension by numbered bins -->
+    <xs:simpleType name="InputBinExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255"/>
+            <xs:pattern value="Tray(\d)+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- Keyword extension federated by namespaces -->
+    <xs:simpleType name="KeywordNsExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:pattern value="\w+:[\w_\-\.]+" />
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- Media type Keyword extension federated by MIME type names -->
+    <xs:simpleType name="MimeExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:pattern value="\w+[\w:/;_\-\\\+\.]*" />
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- Output Bin Keyword extension by numbered bins -->
+    <xs:simpleType name="OutputBinExtensionPatternType">
+        <xs:restriction base="xs:NMTOKEN">
+            <xs:maxLength value="255" />
+            <xs:pattern value="Mailbox(\d)+" />
+            <xs:pattern value="Stacker(\d)+" />
+            <xs:pattern value="Bin(\d)+" />
+        </xs:restriction>
+    </xs:simpleType>
+    <!-- String extension federated by namespaces -->
+    <xs:simpleType name="StringNsExtensionPatternType">
+        <xs:restriction base="xs:anyURI">
+            <xs:pattern value="\w+:[\w:/;_\-\\\+\.]*" />
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
