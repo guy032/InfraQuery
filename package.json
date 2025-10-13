@@ -1,7 +1,7 @@
 {
   "name": "infraquery",
   "version": "1.0.0",
-  "description": "Network scanner with TCP/UDP port scanning and ping sweep capabilities",
+  "description": "Open-source, Agentless network discovery and data extraction engine. Discovers, fingerprints, and maps IT, IoT, and OT devices via SNMP, Modbus, ONVIF, WMI, Prometheus, BACnet, HTTP, and more",
   "main": "dist/index.js",
   "bin": "./dist/index.js",
   "scripts": {
@@ -10,7 +10,8 @@
     "start": "node dist/index.js",
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
-    "prepublish": "yarn build"
+    "prepublishOnly": "yarn build",
+    "release": "bash scripts/release.sh"
   },
   "keywords": [
     "network",
@@ -20,10 +21,28 @@
     "udp",
     "ping",
     "icmp",
-    "security"
+    "security",
+    "snmp",
+    "modbus",
+    "onvif",
+    "wmi",
+    "prometheus",
+    "bacnet",
+    "infrastructure",
+    "discovery",
+    "iot",
+    "ot"
   ],
-  "author": "",
-  "license": "MIT",
+  "author": "Maprix",
+  "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maprixcom/InfraQuery.git"
+  },
+  "bugs": {
+    "url": "https://github.com/maprixcom/InfraQuery/issues"
+  },
+  "homepage": "https://github.com/maprixcom/InfraQuery#readme",
   "devDependencies": {
     "@types/dns-packet": "^5",
     "@types/node": "^20.10.0",

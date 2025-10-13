@@ -1,0 +1,38 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Development files
+.github/
+.yarn/
+.yarnrc.yml
+tsconfig.json
+.prettierrc
+.gitattributes
+.gitignore
+
+# Documentation (keep README.md)
+ADAPTERS.md
+
+# Reports and examples
+reports/
+
+# Build artifacts
+*.log
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+coverage/
+.nyc_output/
+
+# Binaries (keep compiled dist)
+bin/
+

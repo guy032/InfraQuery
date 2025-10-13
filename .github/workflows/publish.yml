@@ -1,0 +1,68 @@
+name: Publish to npm
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - name: Enable Corepack
+        run: corepack enable
+      
+      - name: Install dependencies
+        run: yarn install --immutable
+      
+      - name: Run type check
+        run: yarn typecheck
+      
+      - name: Build
+        run: yarn build
+      
+      - name: Check if version has been updated
+        id: check
+        uses: EndBug/version-check@v2
+        with:
+          diff-search: true
+      
+      - name: Publish to npm
+        if: steps.check.outputs.changed == 'true'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Create GitHub Release
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.check.outputs.version }}
+          release_name: Release v${{ steps.check.outputs.version }}
+          body: |
+            ## Changes in v${{ steps.check.outputs.version }}
+            
+            See the [CHANGELOG](https://github.com/maprixcom/InfraQuery/blob/main/CHANGELOG.md) for details.
+          draft: false
+          prerelease: false
+      
+      - name: Log when version unchanged
+        if: steps.check.outputs.changed != 'true'
+        run: |
+          echo "Version has not changed. Skipping publish."
+          echo "Current version: ${{ steps.check.outputs.version }}"
+
