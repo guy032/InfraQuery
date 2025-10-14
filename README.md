@@ -1,4 +1,6 @@
-Please give us a star so we will continue to add features: ![GitHub Repo stars](https://img.shields.io/github/stars/maprixcom/infraquery)
+> ⭐️ Star InfraQuery to support open-source agentless discovery and help us ship new integrations faster!
+
+![GitHub Repo stars](https://img.shields.io/github/stars/maprixcom/infraquery)
 
 <img width="1458" height="772" alt="image (59)" src="https://github.com/user-attachments/assets/27159656-5452-416e-a6a9-a82fd2036cf0" />
 
