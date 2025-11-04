@@ -2,6 +2,8 @@
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/maprixcom/infraquery)
 
+https://infraquery.ai
+
 <img width="1458" height="772" alt="image (59)" src="https://github.com/user-attachments/assets/27159656-5452-416e-a6a9-a82fd2036cf0" />
 <img width="1703" height="1323" alt="image" src="https://github.com/user-attachments/assets/a48f656c-c3d0-46bc-b2cc-d40dc4a4debd" />
 <img width="1711" height="1318" alt="image" src="https://github.com/user-attachments/assets/821d2df6-48b3-4699-b6d9-edc8f24e63a9" />
